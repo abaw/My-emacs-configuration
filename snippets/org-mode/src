@@ -1,0 +1,6 @@
+#name : insert source code
+# --
+#+BEGIN_SRC ${1:c}
+$0
+#+END_SRC
+

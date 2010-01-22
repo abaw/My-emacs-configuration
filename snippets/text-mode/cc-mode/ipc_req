@@ -1,0 +1,11 @@
+#name : k9 ipc request class
+# --
+class Request${1:name} : public Request {
+public:
+   typedef Request$1 self_type;
+   K9_REQ_CLASS_COMMON_DECL($1);
+
+   Request$1() : Request(TYPE_CODE, REQ_BODY_LEN)
+   {  
+   }
+};

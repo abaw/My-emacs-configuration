@@ -27,3 +27,4 @@
 (load "basic-config")
 (load "cc-config")
 (load "lisp-config")
+(load "yasnippet-config")
