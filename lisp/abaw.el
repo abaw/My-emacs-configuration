@@ -22,7 +22,6 @@
 
 (defun abaw-try-to-require (feature &optional filename)
   "Try to require a feature, if filename is omitted, the filenameis feature.el."
-  (unless filename (setq filename (concat  (symbol-name feature) ".el")))
   (let ((require-ok (require feature filename t)))
     (if require-ok
 	require-ok (progn (message "'%s is not loaded" (symbol-name feature)) nil))))
