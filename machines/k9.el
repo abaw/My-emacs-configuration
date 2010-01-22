@@ -28,3 +28,5 @@
 (load "cc-config")
 (load "lisp-config")
 (load "yasnippet-config")
+(load "doremi-config")
+(load "git-config")
