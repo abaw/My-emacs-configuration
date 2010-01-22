@@ -30,3 +30,4 @@
 (load "yasnippet-config")
 (load "doremi-config")
 (load "git-config")
+(load "org-config")
