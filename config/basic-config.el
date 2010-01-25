@@ -38,7 +38,7 @@
 
 ;; load various useful packages
 (mapc  #'(lambda (package) (abaw-try-to-require package))
-       `(highlight-parentheses dired+ dired-sort-menu hide-region hide-lines eol-conversion))
+       `(highlight-parentheses dired+ dired-sort-menu hide-region hide-lines eol-conversion xscope))
 
 ;; common hot keys
 (global-set-key (kbd "C-c r") 'font-lock-fontify-buffer)
