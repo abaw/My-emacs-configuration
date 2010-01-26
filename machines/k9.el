@@ -31,3 +31,5 @@
 (load "doremi-config")
 (load "git-config")
 (load "org-config")
+
+(put 'set-goal-column 'disabled nil)
