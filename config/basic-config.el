@@ -32,9 +32,14 @@
 	try-complete-lisp-symbol))
 
 ;; ido mode
-(if (abaw-try-to-require 'ido)
-    (ido-mode t))
+(when (abaw-try-to-require 'ido)
+  (ido-mode t)
+  (setq ido-enable-flex-matching t))
 
+;; cua mode for rectangle selection
+(when (fboundp 'cua-mode)
+  (cua-mode t)
+  (setq cua-enable-cua-keys t))
 
 ;; load various useful packages
 (mapc  #'(lambda (package) (abaw-try-to-require package))
