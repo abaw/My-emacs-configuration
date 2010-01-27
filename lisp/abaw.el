@@ -60,7 +60,7 @@
   (interactive)
   (let ((dir-class (dir-locals-find-file (buffer-file-name))))
     (when (consp dir-class)
-      (setq dir-locals-directory-alist 
+      (setq dir-locals-directory-alist
 	    (remassoc  (car dir-class)
 		       dir-locals-directory-alist))
       (hack-local-variables))))

@@ -1,3 +1,6 @@
+(when (abaw-try-to-require 'ctypes)
+  (ctypes-auto-parse-mode 1))
+
 ;; c/c++ hook
 (defun my-c/c++-hook ()
   (setq indent-tabs-mode nil)

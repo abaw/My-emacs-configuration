@@ -2,7 +2,7 @@
 (setenv "EDITOR" "emacsclient")
 
 ;; merge .Xresources if we are in X window
-(when window-system 
+(when window-system
   (shell-command "xrdb -merge ~/.Xresources"))
 
 ;; a bigger kill-ring buffer
@@ -18,7 +18,7 @@
 (load "misc-utilities")
 
 ;; hippie-expand
-(setq hippie-expand-try-functions-list 
+(setq hippie-expand-try-functions-list
       '(try-expand-dabbrev
 	try-expand-dabbrev-visible
 	try-expand-dabbrev-all-buffers
@@ -43,7 +43,13 @@
 
 ;; load various useful packages
 (mapc  #'(lambda (package) (abaw-try-to-require package))
-       `(highlight-parentheses dired+ dired-sort-menu hide-region hide-lines eol-conversion xcscope))
+       `(highlight-parentheses dired+ dired-sort-menu hide-region
+			       hide-lines eol-conversion xcscope
+			       all ascii boxquote
+			       browse-kill-ring dedicated htmlize
+			       keydef minibuf-electric
+			       minibuffer-complete-cycle perldoc
+			       shell-command show-wspace))
 
 ;; common hot keys
 (global-set-key (kbd "C-c r") 'font-lock-fontify-buffer)
@@ -77,6 +83,8 @@
 ;; get best highlighting
 (global-font-lock-mode t)
 (setq font-lock-maximum-decoration t)
+(when (fboundp 'show-ws-highlight-trailing-whitespace)
+  (add-hook 'font-lock-mode-hook 'show-ws-highlight-trailing-whitespace))
 
 ;; active region highlighting
 (transient-mark-mode t)
