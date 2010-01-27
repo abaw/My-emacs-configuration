@@ -82,14 +82,13 @@
 ;; get best highlighting
 (global-font-lock-mode t)
 (setq font-lock-maximum-decoration t)
-(when (fboundp 'show-ws-highlight-trailing-whitespace)
-  (add-hook 'font-lock-mode-hook 'show-ws-highlight-trailing-whitespace))
+(setq-default show-trailing-whitespace t)
 
 ;; active region highlighting
 (transient-mark-mode t)
 
 ;; frame title is current buffer's name
-(setq frame-title-format 
+(setq frame-title-format
       (concat (chomp (shell-command-to-string "hostname"))
 	      ":%b:%f"))
 
@@ -112,4 +111,4 @@
 
 ;; install the color theme for emacs when we got a window system
 (when (and (abaw-try-to-require 'color-theme) window-system)
-  (color-theme-jedit-grey))
+ (color-theme-jedit-grey))
