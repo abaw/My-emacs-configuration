@@ -110,3 +110,7 @@
 ;; let dired could recursively copy or delete directories
 (setq dired-recursive-copies 'top)
 (setq dired-recursive-deletes 'top)
+
+;; install the color theme for emacs when we got a window system
+(when (and (abaw-try-to-require 'color-theme) window-system)
+  (color-theme-jedit-grey))
