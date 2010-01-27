@@ -1,9 +1,9 @@
 ;;; path settings
-(defvar my-emacs-dir 
+(defvar my-emacs-dir
   (file-name-as-directory
-   (file-name-directory 
-    (directory-file-name 
-     (file-name-directory 
+   (file-name-directory
+    (directory-file-name
+     (file-name-directory
       (file-truename load-file-name))))))
 
 (defvar my-emacs-config-dir
@@ -31,5 +31,6 @@
 (load "doremi-config")
 (load "git-config")
 (load "org-config")
+(load "slime-config")
 
 (put 'set-goal-column 'disabled nil)
