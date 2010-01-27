@@ -47,9 +47,8 @@
 			       hide-lines eol-conversion xcscope
 			       all ascii boxquote
 			       browse-kill-ring dedicated htmlize
-			       keydef minibuf-electric
-			       minibuffer-complete-cycle perldoc
-			       shell-command show-wspace))
+			       keydef perldoc shell-command
+			       show-wspace))
 
 ;; common hot keys
 (global-set-key (kbd "C-c r") 'font-lock-fontify-buffer)
