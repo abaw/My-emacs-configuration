@@ -47,8 +47,7 @@
 			       hide-lines eol-conversion xcscope
 			       all ascii boxquote
 			       browse-kill-ring dedicated htmlize
-			       keydef perldoc shell-command
-			       show-wspace))
+			       keydef perldoc shell-command))
 
 ;; common hot keys
 (global-set-key (kbd "C-c r") 'font-lock-fontify-buffer)
