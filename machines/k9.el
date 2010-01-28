@@ -32,5 +32,6 @@
 (load "git-config")
 (load "org-config")
 (load "slime-config")
+(load "ido-config")
 
 (put 'set-goal-column 'disabled nil)
