@@ -108,6 +108,12 @@
 (setq dired-recursive-copies 'top)
 (setq dired-recursive-deletes 'top)
 
+;; we want more space
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -99) ;; tool bar be accessed through C-mouse-3
+(set-fringe-style 0)
+
 ;; install the color theme for emacs when we got a window system
 (when (and (abaw-try-to-require 'color-theme) window-system)
  (color-theme-jedit-grey))
