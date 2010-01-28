@@ -1,10 +1,6 @@
 ;; use emacsclient as the default editors for most programs
 (setenv "EDITOR" "emacsclient")
 
-;; merge .Xresources if we are in X window
-(when window-system
-  (shell-command "xrdb -merge ~/.Xresources"))
-
 ;; a bigger kill-ring buffer
 (setq kill-ring-max 200)
 
