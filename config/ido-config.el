@@ -1,19 +1,17 @@
- (setq ido-execute-command-cache nil)
- (defun ido-execute-command ()
-   (interactive)
-   (call-interactively
-    (intern
-     (ido-completing-read
-      "M-x "
-      (progn
-        (unless ido-execute-command-cache
-          (mapatoms (lambda (s)
-                      (when (commandp s)
-                        (setq ido-execute-command-cache
-                              (cons (format "%S" s) ido-execute-command-cache))))))
-        ido-execute-command-cache)))))
+(when (abaw-try-to-require 'ido)
+  (ido-mode t)
+  (setq ido-enable-flex-matching t)
 
- (add-hook 'ido-setup-hook
-           (lambda ()
-             (setq ido-enable-flex-matching t)
-             (global-set-key "\M-x" 'ido-execute-command)))
+  (when (abaw-try-to-require 'smex)
+    (add-hook 'after-init-hook 'smex-initialize)
+
+    (defun my-smex (&optional args)
+      "with C-u, update the smex database first."
+      (interactive "P")
+      (call-interactively
+       (if args
+	   'smex-update-and-run
+	 'smex)))
+
+    (global-set-key (kbd "M-x") 'my-smex)
+    (global-set-key (kbd "C-c M-x") 'execute-extended-command)))

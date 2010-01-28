@@ -31,11 +31,6 @@
 	try-complete-lisp-symbol-partially
 	try-complete-lisp-symbol))
 
-;; ido mode
-(when (abaw-try-to-require 'ido)
-  (ido-mode t)
-  (setq ido-enable-flex-matching t))
-
 ;; cua mode for rectangle selection
 (when (fboundp 'cua-mode)
   (cua-mode t)
