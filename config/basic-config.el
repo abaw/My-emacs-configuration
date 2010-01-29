@@ -105,6 +105,10 @@
 (menu-bar-mode -99) ;; tool bar be accessed through C-mouse-3
 (set-fringe-style 0)
 
+;; the very nice install-elisp package
+(when (abaw-try-to-require 'install-elisp)
+  (setq install-elisp-repository-directory my-emacs-lisp-dir))
+
 ;; install the color theme for emacs when we got a window system
 (when (and (abaw-try-to-require 'color-theme) window-system)
  (color-theme-jedit-grey))
