@@ -59,7 +59,7 @@
 ;; set title for xterm/putty
 (when (and (not window-system)
 	   (string-match "^xterm" (getenv "TERM")))
-  (if (abaw-try-to-require 'xterm-title t)
+  (if (abaw-try-to-require 'xterm-title)
       (xterm-title-mode 1)))
 
 ;; utf-8 is good
