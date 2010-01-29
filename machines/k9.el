@@ -33,5 +33,6 @@
 (load "org-config")
 (load "slime-config")
 (load "ido-config")
+(load "my-anything-config")
 
 (put 'set-goal-column 'disabled nil)
