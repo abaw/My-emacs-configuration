@@ -1,6 +1,10 @@
 (when (abaw-try-to-require 'ctypes)
   (ctypes-auto-parse-mode 1))
 
+(when (abaw-try-to-require 'flyspell)
+  (mapc #'(lambda (hook) (add-hook hook #'flyspell-prog-mode))
+	`(c-mode-hook c++-mode-hook)))
+
 ;; c/c++ hook
 (defun my-c/c++-hook ()
   (setq indent-tabs-mode nil)
