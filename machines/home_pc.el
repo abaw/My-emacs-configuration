@@ -14,8 +14,9 @@
 (add-to-list 'load-path my-emacs-config-dir)
 (add-to-list 'load-path my-emacs-lisp-dir)
 
-(set-fontset-font "fontset-startup" 'ascii "Monaco-14")
-(set-fontset-font "fontset-startup" 'han "LiHei Pro-14")
+(when window-system
+  (set-fontset-font "fontset-startup" 'ascii "Monaco-14")
+  (set-fontset-font "fontset-startup" 'han "LiHei Pro-14"))
 
 ;;; This was installed by package-install.el.
 ;;; This provides support for the package system and
