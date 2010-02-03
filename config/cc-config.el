@@ -7,6 +7,7 @@
 
 ;; c/c++ hook
 (defun my-c/c++-hook ()
+  (gtags-mode t)
   (setq indent-tabs-mode nil)
   (setq c-basic-offset 4)
   (setq case-fold-search nil)
