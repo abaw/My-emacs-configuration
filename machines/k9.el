@@ -34,6 +34,7 @@
 (load "slime-config")
 (load "ido-config")
 (load "my-anything-config")
+(load "unbind-key-config")
 
 (put 'set-goal-column 'disabled nil)
 (custom-set-variables
