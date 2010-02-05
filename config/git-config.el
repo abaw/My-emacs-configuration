@@ -14,9 +14,9 @@
     (defvar anything-c-source-git-project-files
       '((name . "Files from Current GIT Project")
 	(init . (lambda ()
-		  (let* ((top-dir (magit-get-top-dir (if (buffer-file-name)
-							 (file-name-directory (buffer-file-name))
-						       default-directory)))
+		  (let* ((top-dir (file-truename (magit-get-top-dir (if (buffer-file-name)
+									(file-name-directory (buffer-file-name))
+								      default-directory))))
 			 (default-directory top-dir)
 			 (signature (magit-shell (magit-format-git-command "rev-parse --verify HEAD" nil))))
 
@@ -29,7 +29,7 @@
 		      (setq anything-c-source-git-project-files-cache
 			    (list top-dir
 				  signature
-				  (anything-candidate-buffer 'local)))
+				  (anything-candidate-buffer 'global)))
 		      (with-current-buffer (third anything-c-source-git-project-files-cache)
 			(dolist (filename (mapcar (lambda (file) (concat default-directory file))
 						  (magit-shell-lines (magit-format-git-command "ls-files" nil))))
