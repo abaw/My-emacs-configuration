@@ -52,8 +52,27 @@
 (global-set-key (kbd "C-,") 'ska-jump-to-register)
 (global-set-key (kbd "C-c f") 'wy-go-to-char)
 (global-set-key (kbd "C-c b") 'ywb-create/switch-scratch)
-(if (abaw-try-to-require 'ibuffer)
-    (global-set-key (kbd "C-x C-b") 'ibuffer))
+(when (abaw-try-to-require 'ibuffer)
+    (global-set-key (kbd "C-x C-b") 'ibuffer)
+    (setq ibuffer-saved-filter-groups
+	  (quote (("default"
+		   ("Org" ;; all org-related buffers
+		    (mode . org-mode))
+		   ("Magit"
+		    (mode . magit-mode))
+		   ("Programming" ;; prog stuff not already in MyProjectX
+		    (or
+		     (mode . c-mode)
+		     (mode . c++-mode)
+		     (mode . perl-mode)
+		     (mode . python-mode)
+		     (mode . lisp-mode)
+		     (mode . emacs-lisp-mode)
+		     ;; etc
+		     ))))))
+    (add-hook 'ibuffer-mode-hook
+	      (lambda ()
+		(ibuffer-switch-to-saved-filter-groups "default"))))
 
 
 ;; set title for xterm/putty

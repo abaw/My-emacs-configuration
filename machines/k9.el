@@ -36,6 +36,18 @@
 (load "my-anything-config")
 (load "unbind-key-config")
 
+;; add my projects to ibuffer-saved-filter-groups
+(setq ibuffer-saved-filter-groups
+      (cons (loop for item in (find "default" ibuffer-saved-filter-groups :key #'car :test #'equal)
+		  ;; my projects
+		  when (and (listp item) (equal (car item) "Programming"))
+		  collect '("Project k10.git" (filename . "/home/abaw/k10.git/"))
+		  and collect '("Project k9.git" (filename . "/home/abaw/k9.git/"))
+		  ;; end of my projects
+		  when (or (atom item) (not (string-match "^Project " (car item))))
+		  collect item)
+	    (remove* "default" ibuffer-saved-filter-groups :key #'car :test #'equal)))
+
 (put 'set-goal-column 'disabled nil)
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
