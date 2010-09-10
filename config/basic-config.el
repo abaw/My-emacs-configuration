@@ -86,6 +86,7 @@
 (set-keyboard-coding-system 'utf-8)
 
 ;; wrap long lines
+(set-default 'truncate-lines t)
 (setq truncate-partial-width-windows nil)
 
 ;; get best highlighting

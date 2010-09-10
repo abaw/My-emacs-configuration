@@ -54,6 +54,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(cscope-do-not-update-database t)
  '(flyspell-use-meta-tab nil)
  '(yas/trigger-key "<C-tab>"))
 (custom-set-faces
@@ -62,3 +63,5 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
+
+(put 'narrow-to-region 'disabled nil)
