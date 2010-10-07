@@ -30,7 +30,7 @@
 ;; cua mode for rectangle selection
 (when (fboundp 'cua-mode)
   (cua-mode t)
-  (setq cua-enable-cua-keys t))
+  (setq cua-enable-cua-keys 'shift))
 
 ;; load various useful packages
 (mapc  #'(lambda (package) (abaw-try-to-require package))
@@ -145,16 +145,13 @@
 (add-hook 'find-file-hook
           'th-rename-tramp-buffer)
 
-(defadvice find-file (around th-find-file activate)
-  "Open FILENAME using tramp's sudo method if it's read-only."
-  (if (and (not (file-writable-p (ad-get-arg 0)))
-           (y-or-n-p (concat "File "
-                             (ad-get-arg 0)
-                             " is read-only.  Open it as root? ")))
-      (th-find-file-sudo (ad-get-arg 0))
-    ad-do-it))
-
 (defun th-find-file-sudo (file)
   "Opens FILE with root privileges."
   (interactive "F")
   (set-buffer (find-file (concat "/sudo::" file))))
+
+(defun th-refind-file-sudo ()
+  (interactive)
+  (th-find-file-sudo (buffer-file-name)))
+
+(global-set-key (kbd "M-r") 'th-refind-file-sudo)
