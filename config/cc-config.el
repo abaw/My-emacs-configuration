@@ -3,6 +3,9 @@
   (ctypes-auto-parse-mode 1))
 
 (when (abaw-try-to-require 'flyspell)
+  ;; disable binding ctrl-. and ctrl-,
+  (define-key flyspell-mode-map (kbd "C-.") nil)
+  (define-key flyspell-mode-map (kbd "C-,") nil)
   (mapc #'(lambda (hook) (add-hook hook #'flyspell-prog-mode))
 	`(c-mode-hook c++-mode-hook)))
 
@@ -15,6 +18,8 @@
   (c-set-offset 'substatement-open 0)
   (c-set-offset 'cpp-macro 0)
   (c-set-offset 'brace-list-open 0)
+  (c-set-offset 'cpp-macro-cont 0)
+  (setq c-syntactic-indentation-in-macros nil)
   (when (featurep 'highlight-parentheses) (highlight-parentheses-mode 1)))
 
 ;; for QT
