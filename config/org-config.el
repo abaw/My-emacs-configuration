@@ -8,6 +8,7 @@
 	    #'(lambda ()
 		(flyspell-mode t)))
 
+  (abaw-try-to-require 'org-s5)
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
   (org-babel-do-load-languages 'org-babel-load-languages
 			       '((emacs-lisp . t)
