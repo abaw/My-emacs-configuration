@@ -45,3 +45,5 @@
 
 (put 'set-goal-column 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+
+(put 'ido-exit-minibuffer 'disabled nil)
