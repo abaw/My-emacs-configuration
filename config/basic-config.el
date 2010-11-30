@@ -133,6 +133,11 @@
 (when (and (abaw-try-to-require 'color-theme) window-system)
  (color-theme-jedit-grey))
 
+;; using cdargs
+(abaw-try-to-require 'cdargs)
+
+;; start the server
+(server-start)
 
 ;; open read-only file using sudo, taken from Tassilo's Blog
 (defun th-rename-tramp-buffer ()
