@@ -133,8 +133,8 @@
 (when (and (abaw-try-to-require 'color-theme) window-system)
  (color-theme-jedit-grey))
 
-;; using cdargs
-(abaw-try-to-require 'cdargs)
+;; using cdargs - this is too bad, cause org-export not to work
+;; (abaw-try-to-require 'cdargs)
 
 ;; start the server
 (server-start)
