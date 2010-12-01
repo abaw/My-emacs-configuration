@@ -37,7 +37,13 @@
 (load "org-config")
 (load "slime-config")
 (load "ido-config")
+(load "my-anything-config")
+(load "unbind-key-config")
+
 
 (setq magit-git-executable "/usr/local/git/bin/git")
 
 (put 'set-goal-column 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+
+(put 'ido-exit-minibuffer 'disabled nil)
