@@ -1,3 +1,4 @@
+;; This file contains some enhancements I writing or collected from the internet.
 (defun abaw-query-replace ()
   "do query-replace without losing marked region"
   (interactive)
@@ -73,3 +74,29 @@ COMMAND with `*'s.  See `make-comint' and `comint-exec'."
   (let* ((arg-list (split-string command))
 	 (name (file-name-nondirectory (car arg-list))))
     (switch-to-buffer (apply #'make-comint (append (list name (car arg-list) nil) (cdr arg-list))))))
+
+(defun abaw-scroll-to-current-column ()
+  "This command scroll horizontally to let current column become
+the leftmost column on screen."
+  (interactive)
+  (scroll-left (- (current-column) (window-hscroll)) t))
+
+;; open read-only file using sudo, taken from Tassilo's Blog
+(defun th-rename-tramp-buffer ()
+  (when (file-remote-p (buffer-file-name))
+    (rename-buffer
+     (format "%s:%s"
+             (file-remote-p (buffer-file-name) 'method)
+             (buffer-name)))))
+
+(add-hook 'find-file-hook
+          'th-rename-tramp-buffer)
+
+(defun th-find-file-sudo (file)
+  "Opens FILE with root privileges."
+  (interactive "F")
+  (set-buffer (find-file (concat "/sudo::" file))))
+
+(defun th-refind-file-sudo ()
+  (interactive)
+  (th-find-file-sudo (buffer-file-name)))

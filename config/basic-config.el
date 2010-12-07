@@ -52,6 +52,8 @@
 (global-set-key (kbd "C-,") 'ska-jump-to-register)
 (global-set-key (kbd "C-c f") 'wy-go-to-char)
 (global-set-key (kbd "C-c b") 'ywb-create/switch-scratch)
+(global-set-key (kbd "M-r") 'th-refind-file-sudo)
+(global-set-key (kbd "C-x <") 'abaw-scroll-to-current-column)
 (when (abaw-try-to-require 'ibuffer)
     (global-set-key (kbd "C-x C-b") 'ibuffer)
     (setq ibuffer-saved-filter-groups
@@ -139,24 +141,6 @@
 ;; start the server
 (server-start)
 
-;; open read-only file using sudo, taken from Tassilo's Blog
-(defun th-rename-tramp-buffer ()
-  (when (file-remote-p (buffer-file-name))
-    (rename-buffer
-     (format "%s:%s"
-             (file-remote-p (buffer-file-name) 'method)
-             (buffer-name)))))
-
-(add-hook 'find-file-hook
-          'th-rename-tramp-buffer)
-
-(defun th-find-file-sudo (file)
-  "Opens FILE with root privileges."
-  (interactive "F")
-  (set-buffer (find-file (concat "/sudo::" file))))
-
-(defun th-refind-file-sudo ()
-  (interactive)
-  (th-find-file-sudo (buffer-file-name)))
-
-(global-set-key (kbd "M-r") 'th-refind-file-sudo)
+;; put emacs backup files all together
+(setq make-backup-file-name-function
+      (lambda (file) (concat "~/.emacs_backups/" (file-name-nondirectory file) "~")))
