@@ -100,3 +100,15 @@ the leftmost column on screen."
 (defun th-refind-file-sudo ()
   (interactive)
   (th-find-file-sudo (buffer-file-name)))
+
+(defun my-universal-argument ()
+  "Allow to use more other values for prefix argument:"
+  (interactive)
+  (message "%s" unread-command-events)
+  (let ((event (read-event "press c(column),- or numbers" nil 5)))
+    (if (and (not (event-modifiers event))
+	     (eq (event-basic-type event) ?c))
+	(setf prefix-arg (- (current-column) (window-hscroll)))
+      (progn
+	(setq unread-command-events (cons event unread-command-events))
+	(universal-argument)))))
