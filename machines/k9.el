@@ -36,6 +36,7 @@
 (load "my-anything-config")
 (load "unbind-key-config")
 (load "ack-config")
+(load "doxymacs-config")
 
 ;; add my projects to ibuffer-saved-filter-groups
 (setq ibuffer-saved-filter-groups

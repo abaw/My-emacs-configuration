@@ -1,0 +1,8 @@
+(add-to-list 'load-path (abaw-path (list my-emacs-lisp-dir "doxymacs" "lisp") t))
+(require 'doxymacs)
+(custom-set-variables '(doxymacs-doxygen-style "Qt"))
+(add-hook 'c-mode-common-hook 'doxymacs-mode)
+(add-hook 'font-lock-mode-hook (lambda ()
+				  (when (or (eq major-mode 'c-mode)
+					   (eq major-mode 'c++-mode))
+				      (doxymacs-font-lock))))

@@ -112,3 +112,16 @@ the leftmost column on screen."
       (progn
 	(setq unread-command-events (cons event unread-command-events))
 	(universal-argument)))))
+
+(defun abaw-path (components &optional is-directory)
+  "concatenating all the given components to a file name. If
+  IS-DIRECTORY is non-nil, the resulting filename is a directory
+  instead of a filename."
+  (when components
+    (if (cdr components)
+	(concat (file-name-as-directory (car components))
+	       (abaw-path (cdr components)
+			   is-directory))
+      (if is-directory
+	  (file-name-as-directory (car components))
+	(car components)))))
