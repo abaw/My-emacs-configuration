@@ -1,5 +1,6 @@
 (when (abaw-try-to-require 'ido)
   (ido-mode t)
+  (fset 'read-file-name 'ido-read-file-name)
   (setq ido-enable-flex-matching t)
 
   (when (abaw-try-to-require 'smex)
