@@ -78,11 +78,11 @@
 		(ibuffer-switch-to-saved-filter-groups "default"))))
 
 
-;; set title for xterm/putty
-(when (and (not window-system)
-	   (string-match "^xterm" (getenv "TERM")))
-  (if (abaw-try-to-require 'xterm-title)
-      (xterm-title-mode 1)))
+;; set title for xterm/putty, the emacs hangs when call xterm-title-mode
+;; (when (and (not window-system)
+;; 	   (string-match "^xterm" (getenv "TERM")))
+;;   (if (abaw-try-to-require 'xterm-title)
+;;       (xterm-title-mode 1)))
 
 ;; utf-8 is good
 (set-language-environment 'utf-8)

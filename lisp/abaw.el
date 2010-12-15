@@ -1,4 +1,5 @@
 ;; This file contains some enhancements I writing or collected from the internet.
+(require 'cl)
 (defun abaw-query-replace ()
   "do query-replace without losing marked region"
   (interactive)
