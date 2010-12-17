@@ -1,0 +1,4 @@
+#name : constructor
+#condition : (and (c-major-mode-is 'c++-mode) (fboundp 'c++-inclass-name))
+# --
+${1:`(or (c++-inclass-name) "no class")`}($2);

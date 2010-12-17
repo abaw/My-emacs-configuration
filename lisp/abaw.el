@@ -105,14 +105,14 @@ the leftmost column on screen."
 (defun my-universal-argument ()
   "Allow to use more other values for prefix argument:"
   (interactive)
-  (message "%s" unread-command-events)
   (let ((event (read-event "press c(column),- or numbers" nil 5)))
+    (message "got event:%s" event)
     (if (and (not (event-modifiers event))
 	     (eq (event-basic-type event) ?c))
 	(setf prefix-arg (- (current-column) (window-hscroll)))
       (progn
 	(setq unread-command-events (cons event unread-command-events))
-	(universal-argument)))))
+	(call-interactively 'universal-argument)))))
 
 (defun abaw-path (components &optional is-directory)
   "concatenating all the given components to a file name. If
@@ -126,3 +126,53 @@ the leftmost column on screen."
       (if is-directory
 	  (file-name-as-directory (car components))
 	(car components)))))
+
+(defun abaw-list-all-files-in (directory &optional recursive regexp)
+  "list all files in DIRECTORY. Recursively listing files if
+RECURSIVE is non-nil. Only files whose names match REGEXP will be
+returned if REGEXP is non-nil. Note symlinks are not followed."
+  (loop for file in (ignore-errors (directory-files-and-attributes directory t))
+	when (and (null (second file)) (or (null regexp) (string-match regexp (car file))))
+	collect (car file)
+	when (and recursive (eq (second file) t) (not (string-match "\\.\\.?$" (car file))))
+	append (abaw-list-all-files-in (car file) t regexp)))
+
+(defun abaw-find-all-files-in (directory &optional recursive regexp)
+  "find all files inside DIRECTORY. if RECURSIVE is non-nil,
+  finding is recursive. if REGEXP is non-nil, only files whose
+  name match REGEXP are opened."
+  (interactive (list (read-directory-name "Directory")
+		     (read-minibuffer "Recursive?" nil)
+		     (read-regexp "Regex matcher:" nil)))
+  (let ((files (abaw-list-all-files-in directory recursive regexp)))
+    (mapc 'find-file files)
+    (message "opened %d files" (length files))))
+
+(defadvice quail-translate-key (around boshiamy first activate)
+  (when (and (equal (quail-name) "boshiamy"))
+    (message "current key='%s'" quail-current-key)
+    (if (= last-command-event ?\ )
+      (let ((quail-current-key (substring quail-current-key 0 -1)))
+	ad-do-it)
+      ad-do-it)))
+
+(defun c++-inclass-name (&optional pos)
+  "return the class name at POS if POS is inside a class
+  definition. if POS is nil, current point is position used."
+  (flet ((get-syntax ()
+		     (if (boundp 'c-syntactic-context) ;; this is copied from cc-cmds.el
+			 ;; Use `c-syntactic-context' in the same way as
+			 ;; `c-indent-line', to be consistent.
+			 c-syntactic-context
+		       (c-save-buffer-state nil
+			 (c-guess-basic-syntax)))))
+    (let ((syntax (get-syntax)))
+      (when (eq (caar syntax) 'inclass)
+	(save-excursion
+	  (let* ((in-pos (cadar syntax)) ;; { pos
+		 (syntax (progn (goto-char in-pos) (get-syntax)))
+		 (open-class-pos ;; class XXX or template <YYY> classs XXX pos
+		  (when (eq (caar syntax) 'class-open) (cadar syntax)))
+		 (class-name-string (c-syntactic-content open-class-pos in-pos t)))
+	    (when (string-match "class \\(\\w+\\)" class-name-string)
+	      (match-string 1 class-name-string))))))))
