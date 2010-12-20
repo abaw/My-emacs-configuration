@@ -7,4 +7,8 @@
 
 (add-hook 'lisp-mode-hook 'my/lisp-hook)
 (add-hook 'emacs-lisp-mode-hook 'my/lisp-hook)
+(add-hook 'ielm-mode-hook 'my/lisp-hook)
+(when (abaw-try-to-require 'paredit)
+  (add-hook 'ielm-mode-hook (lambda ()
+			      (paredit-mode +1))))
 
