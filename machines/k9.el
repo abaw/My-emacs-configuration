@@ -58,6 +58,7 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(cscope-do-not-update-database t)
+ '(doxymacs-doxygen-style "Qt")
  '(flyspell-use-meta-tab nil)
  '(yas/trigger-key "<C-tab>"))
 (custom-set-faces
@@ -65,6 +66,6 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- )
+ '(font-lock-function-name-face ((t (:foreground "Green4" :height 1.3)))))
 
 (put 'narrow-to-region 'disabled nil)
