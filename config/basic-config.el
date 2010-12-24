@@ -54,7 +54,9 @@
 (global-set-key (kbd "C-c b") 'ywb-create/switch-scratch)
 (global-set-key (kbd "M-r") 'th-refind-file-sudo)
 (global-set-key (kbd "C-x <") 'abaw-scroll-to-current-column)
-(global-set-key (kbd "C-u") 'my-universal-argument)
+(define-key universal-argument-map [?c] 'my-column-argument)
+
+;; categories of buffers
 (when (abaw-try-to-require 'ibuffer)
     (global-set-key (kbd "C-x C-b") 'ibuffer)
     (setq ibuffer-saved-filter-groups

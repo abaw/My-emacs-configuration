@@ -102,17 +102,14 @@ the leftmost column on screen."
   (interactive)
   (th-find-file-sudo (buffer-file-name)))
 
-(defun my-universal-argument ()
-  "Allow to use more other values for prefix argument:"
-  (interactive)
-  (let ((event (read-event "press c(column),- or numbers" nil 5)))
-    (message "got event:%s" event)
-    (if (and (not (event-modifiers event))
-	     (eq (event-basic-type event) ?c))
-	(setf prefix-arg (- (current-column) (window-hscroll)))
-      (progn
-	(setq unread-command-events (cons event unread-command-events))
-	(call-interactively 'universal-argument)))))
+(defun my-column-argument (arg)
+  "Used to set prefix argument to current column number"
+  (interactive "P")
+  (when (and (not (event-modifiers last-command-event))
+	     (eq (event-basic-type last-command-event) ?c))
+    (setf prefix-arg (- (current-column) (window-hscroll))))
+  (setq universal-argument-num-events (length (this-command-keys)))
+  (ensure-overriding-map-is-bound))
 
 (defun abaw-path (components &optional is-directory)
   "concatenating all the given components to a file name. If
@@ -176,3 +173,37 @@ returned if REGEXP is non-nil. Note symlinks are not followed."
 		 (class-name-string (c-syntactic-content open-class-pos in-pos t)))
 	    (when (string-match "class \\(\\w+\\)" class-name-string)
 	      (match-string 1 class-name-string))))))))
+
+(defun c++-todef (begin end)
+  "convert function declrations between BEGIN and END to empty
+definitions and store them in the kill ring for pasting."
+  (interactive "r")
+  (let ((decl (buffer-substring-no-properties begin end))
+	(class-name (c++-inclass-name)))
+    (with-temp-buffer
+      (c++-mode)
+      (insert decl)
+      (goto-char (point-min))
+      (kill-comment t)
+      (while (zerop (forward-line))
+	(kill-comment t))
+      (goto-char (point-min))
+
+      (flet ((next-semicolmn ()
+			     (c-syntactic-re-search-forward ";" nil t))
+
+	     (convert-one-declaration ()
+				      (c-electric-backspace nil)
+				      (newline)
+				      (insert "{\n}" )
+				      (backward-sexp)
+				      (backward-sexp)
+				      (if (looking-at "const")
+					  (backward-sexp))
+				      (backward-sexp)
+				      (when class-name
+					(insert (concat class-name "::")))))
+	(while (next-semicolmn)
+	  (convert-one-declaration))
+	(kill-region (point-min)
+		      (point-max))))))
