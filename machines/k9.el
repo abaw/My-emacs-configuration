@@ -46,6 +46,7 @@
 		  when (and (listp item) (equal (car item) "Programming"))
 		  collect '("Project k10.git" (filename . "/home/abaw/k10.git/"))
 		  and collect '("Project k9.git" (filename . "/home/abaw/k9.git/"))
+		  and collect '("Project 8820.git" (filename . "/home/abaw/projs/8820/8820.git/"))
 		  ;; end of my projects
 		  when (or (atom item) (not (string-match "^Project " (car item))))
 		  collect item)

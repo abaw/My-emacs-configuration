@@ -7,7 +7,7 @@ values."
       ad-do-it))
 
   (ido-mode t)
-  (fset 'read-file-name 'ido-read-file-name)
+  ;; this is kind of danger (fset 'read-file-name 'ido-read-file-name)
   (setq ido-enable-flex-matching t)
 
   (when (abaw-try-to-require 'smex)
