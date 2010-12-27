@@ -185,8 +185,10 @@ definitions and store them in the kill ring for pasting."
       (insert decl)
       (goto-char (point-min))
       (kill-comment t)
-      (while (zerop (forward-line))
-	(kill-comment t))
+      (loop for point = (point)
+	    do (kill-comment t)
+	    until (= point (point)))
+
       (goto-char (point-min))
 
       (flet ((next-semicolmn ()
