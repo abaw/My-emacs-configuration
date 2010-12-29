@@ -23,9 +23,10 @@ Typing `wy-go-to-char-key' again will move forwad to the next Nth
 occurence of CHAR."
   (interactive "p\ncGo to char: ")
   (search-forward (string char) nil nil n)
-  (while (char-equal (read-char)
-		     char)
-    (search-forward (string char) nil nil n))
+  (while (let ((event (read-event)))
+	   (and (characterp event)
+		(char-equal event char)))
+        (search-forward (string char) nil nil n))
   (setq unread-command-events (list last-input-event)))
 
 ;; switch to or create scratch buffer
