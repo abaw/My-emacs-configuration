@@ -32,6 +32,7 @@
 
 (defun qt-c++-hook ()
   (add-to-list 'c-macro-names-with-semicolon "Q_CLASSINFO")
+  (add-to-list 'c-macro-names-with-semicolon "LOG4QT_DECLARE_QCLASS_LOGGER")
   (c-make-macro-with-semi-re))
 
 (add-hook 'c-mode-hook 'my-c/c++-hook)
