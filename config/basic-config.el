@@ -54,6 +54,8 @@
 (global-set-key (kbd "C-c b") 'ywb-create/switch-scratch)
 (global-set-key (kbd "M-r") 'th-refind-file-sudo)
 (global-set-key (kbd "C-x <") 'abaw-scroll-to-current-column)
+(global-set-key (kbd "M-F") 'forward-part-in-word)
+(global-set-key (kbd "M-B") 'backward-part-in-word)
 (define-key universal-argument-map [?c] 'my-column-argument)
 
 ;; categories of buffers

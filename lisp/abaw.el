@@ -1,5 +1,16 @@
 ;; This file contains some enhancements I writing or collected from the internet.
 (require 'cl)
+(defmacro aif (condition then &optional else)
+  "bind the result of CONDITION to it in THEN and ELSE."
+  `(let ((it ,condition))
+     (if it
+	 ,then
+       ,else)))
+
+(defmacro awhen (condition &rest body)
+  `(aif ,condition
+	(progn ,@body)))
+
 (defun abaw-query-replace ()
   "do query-replace without losing marked region"
   (interactive)
@@ -145,14 +156,6 @@ returned if REGEXP is non-nil. Note symlinks are not followed."
     (mapc 'find-file files)
     (message "opened %d files" (length files))))
 
-(defadvice quail-translate-key (around boshiamy first activate)
-  (when (and (equal (quail-name) "boshiamy"))
-    (message "current key='%s'" quail-current-key)
-    (if (= last-command-event ?\ )
-      (let ((quail-current-key (substring quail-current-key 0 -1)))
-	ad-do-it)
-      ad-do-it)))
-
 (defun c++-inclass-name (&optional pos)
   "return the class name at POS if POS is inside a class
   definition. if POS is nil, current point is position used."
@@ -190,22 +193,72 @@ definitions and store them in the kill ring for pasting."
 	    until (= point (point)))
 
       (goto-char (point-min))
-
       (flet ((next-semicolmn ()
 			     (c-syntactic-re-search-forward ";" nil t))
-
+	     (clear-=0 ()
+		       (let ((orig-point (point)))
+			 (re-search-backward ")")
+			 (when (search-forward "=" orig-point t)
+			   (backward-char)
+			   (kill-word 1))
+			 (search-forward ";")))
+	     (clear-default-arguments ()
+				      (save-restriction
+				      	(destructuring-bind (start . end) (bounds-of-thing-at-point 'sexp)
+				      	  (narrow-to-region start end))
+				      	(goto-char (point-min))
+				      	(while (search-forward "=" nil t)
+				      	  (backward-char)
+				      	  (kill-word 1))
+					(goto-char (point-min))))
+	     (semicolmn-to-{} ()
+			      (c-electric-backspace nil)
+			      (newline)
+			      (insert "{\n}" ))
+	     (back-to-arg-left-paren ()
+				      (while (not (looking-at "("))
+					(backward-sexp)))
+	     (beginning-of-fn-name ()
+					 (backward-sexp)
+					 (when (looking-back "~")
+					   (backward-char)))
+	     (clear-unused-qualifer-before-fn-name ()
+						   (when (looking-at "\\(virtual\\|explicit\\)")
+						     (kill-word 1)
+						     (delete-horizontal-space)))
 	     (convert-one-declaration ()
-				      (c-electric-backspace nil)
-				      (newline)
-				      (insert "{\n}" )
-				      (backward-sexp)
-				      (backward-sexp)
-				      (if (looking-at "const")
-					  (backward-sexp))
-				      (backward-sexp)
+				      (clear-=0)
+				      (semicolmn-to-{})
+				      (back-to-arg-left-paren)
+				      (clear-default-arguments)
+				      (beginning-of-fn-name)
 				      (when class-name
-					(insert (concat class-name "::")))))
-	(while (next-semicolmn)
-	  (convert-one-declaration))
-	(kill-region (point-min)
-		      (point-max))))))
+					(insert (concat class-name "::")))
+				      (c-beginning-of-defun)
+				      (clear-unused-qualifer-before-fn-name)))
+
+	(loop for start-point = (point) then (point)
+	      while (next-semicolmn)
+	      do (progn
+		   (convert-one-declaration)
+		   (kill-region start-point (point))
+		   (c-end-of-defun)))
+	(kill-ring-save (point-min)
+			(point-max))))))
+
+
+(defun forward-part-in-word ()
+  "forward one part in word like \"ThisIsAWord\""
+  (interactive)
+  (when (looking-at "[[:blank:]]")
+    (forward-whitespace 1))
+  (if (re-search-forward ".[A-Z]" (cdr (bounds-of-thing-at-point 'word)) t)
+      (backward-char)
+    (forward-word)))
+
+(defun backward-part-in-word ()
+  "backward one part in word like \"ThisIsAWord\""
+  (interactive)
+  (unless (re-search-backward "[A-Z]" (car (bounds-of-thing-at-point 'word))
+			   t)
+      (backward-word)))
