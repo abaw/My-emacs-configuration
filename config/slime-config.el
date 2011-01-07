@@ -1,7 +1,5 @@
-;; (add-to-list 'load-path (concat my-emacs-lisp-dir "slime"))
-;; (setq inferior-lisp-program "sbcl")
+;;(add-to-list 'load-path (concat my-emacs-lisp-dir "slime"))
+;; (load (expand-file-name "~/quicklisp/slime-helper.el"))
+;; (setq inferior-lisp-program "/usr/local/bin/sbcl")
 ;; (require 'slime)
 ;; (slime-setup '(slime-fancy))
-
-;; (when (abaw-try-to-require 'paredit)
-;;   (add-hook 'slime-repl-mode-hook (lambda () (paredit-mode +1))))
