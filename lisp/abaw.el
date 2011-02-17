@@ -182,7 +182,7 @@ returned if REGEXP is non-nil. Note symlinks are not followed."
 definitions and store them in the kill ring for pasting."
   (interactive "r")
   (let ((decl (buffer-substring-no-properties begin end))
-	(class-name (c++-inclass-name)))
+	(class-name (save-excursion (goto-char begin) (c++-inclass-name))))
     (with-temp-buffer
       (c++-mode)
       (insert decl)
