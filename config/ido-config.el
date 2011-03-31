@@ -1,5 +1,5 @@
 (when (abaw-try-to-require 'ido)
-  (defadvice ido-ignore-item-p (around ido-wa first (item &rest other-args activate))
+  (defadvice ido-ignore-item-p (around ido-wa first (item &rest other-args) activate)
     "because ido-ignore-item-p may get a nil when there are
 killed buffers whose (buffer-name) return nil. We must filter nil
 values."
