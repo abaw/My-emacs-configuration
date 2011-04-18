@@ -38,6 +38,7 @@
 (load "ack-config")
 (load "doxymacs-config")
 (load "header-config")
+(load "gtags-config")
 
 ;; add my projects to ibuffer-saved-filter-groups
 (setq ibuffer-saved-filter-groups
