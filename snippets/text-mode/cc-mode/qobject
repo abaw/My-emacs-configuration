@@ -2,7 +2,7 @@
 # --
 class ${1:name} : public ${2:QObject}
 {
-	Q_OBJECT
+Q_OBJECT
 public:
-	$0
+$0
 };
