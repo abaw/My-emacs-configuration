@@ -9,6 +9,8 @@ values."
   (ido-mode t)
   ;; this is kind of danger (fset 'read-file-name 'ido-read-file-name)
   (setq ido-enable-flex-matching t)
+  (setq ido-default-buffer-method 'selected-window)
+  (setq ido-default-file-method 'selected-window)
 
   (when (abaw-try-to-require 'smex)
     (add-hook 'after-init-hook 'smex-initialize)
