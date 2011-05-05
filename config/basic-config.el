@@ -132,16 +132,15 @@
 (menu-bar-mode -99) ;; tool bar be accessed through C-mouse-3
 (set-fringe-style 0)
 
-;; the very nice install-elisp package
-(when (abaw-try-to-require 'install-elisp)
-  (setq install-elisp-repository-directory my-emacs-lisp-dir))
-
 ;; install the color theme for emacs when we got a window system
 (when (and (abaw-try-to-require 'color-theme) window-system)
  (color-theme-jedit-grey))
 
 ;; using cdargs - this is too bad, cause org-export not to work
 ;; (abaw-try-to-require 'cdargs)
+
+(when window-system
+  (setq server-raise-frame t))
 
 ;; start the server
 (server-start)
