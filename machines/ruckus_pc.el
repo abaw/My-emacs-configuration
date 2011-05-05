@@ -29,6 +29,7 @@
 ;;(load "doxymacs-config")
 (load "header-config")
 (load "gtags-config")
+(load "auto-complete-config")
 (load "p4-config")
 
 ;; add my projects to ibuffer-saved-filter-groups
