@@ -1,0 +1,1 @@
+(require 'vc-p4)
