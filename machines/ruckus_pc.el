@@ -30,6 +30,8 @@
 (load "header-config")
 (load "gtags-config")
 (load "auto-complete-config")
+
+(setenv "P4CONFIG" ".p4config")
 (load "p4-config")
 
 ;; add my projects to ibuffer-saved-filter-groups
