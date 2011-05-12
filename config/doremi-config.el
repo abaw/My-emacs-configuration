@@ -3,6 +3,6 @@
   `(kbd ,(concat "C-x t " key)))
 
 (when (abaw-try-to-require 'windmove)
-  (windmove-default-keybindings 'control))
+  (windmove-default-keybindings 'super))
 
 (global-set-key (doremi-key "r") 'doremi-window-width)
