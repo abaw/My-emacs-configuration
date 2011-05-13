@@ -12,4 +12,8 @@
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
   (org-babel-do-load-languages 'org-babel-load-languages
 			       '((emacs-lisp . t)
-				 (ditaa . t))))
+				 (ditaa . t)))
+
+  ;; configure remember if we have remember installed(this is packed with Emacs 23)
+  (when (fboundp 'remember)
+    (org-remember-insinuate)))
