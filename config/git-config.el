@@ -36,7 +36,9 @@
 						   (magit-shell-lines (magit-format-git-command "ls-files" nil))))
 			   (insert filename)
 			   (newline))))
-		     (anything-candidate-buffer (third anything-c-source-git-project-files-cache))))))
+		     (anything-candidate-buffer (third anything-c-source-git-project-files-cache)))
+		   (anything-candidate-buffer 'global) ;; need to make a empty candicate buffer if here is not a git reposiroty
+		   )))
 
         (type . file)
 	(candidates-in-buffer)))
