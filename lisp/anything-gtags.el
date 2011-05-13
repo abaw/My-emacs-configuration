@@ -162,6 +162,13 @@
                               (gtags-goto-tag candidate ""))))))
 ;; (setq anything-sources (list anything-c-source-gtags-select))
 
+;; added by abaw: the source for gtags-find-file
+(defvar anything-c-source-gtags-files
+  '((name . "Files from GTAGS")
+    (init . (lambda () (call-process-shell-command "global -P" nil (list (anything-candidate-buffer 'global) nil))))
+    (type . file)
+    (candidates-in-buffer)))
+
 (defun anything-gtags-select ()
   "Tag jump using gtags and `anything'."
   (interactive)
