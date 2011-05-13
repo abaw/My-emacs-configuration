@@ -34,6 +34,13 @@
 (setenv "P4CONFIG" ".p4config")
 (load "p4-config")
 
+;; org-remember templates
+(setq org-directory "~/orgs/")
+(setq org-default-notes-file (concat org-directory "notes.org"))
+(setq org-remember-templates
+      '(("Code" ?c "** %^{TITLE}\n%?\n#+begin_src %(let ((mode (format \"%s\" org-select-template-temp-major-mode))) (substring mode 0 (string-match \"-mode\" mode)))\n%i\n#+end_src\n-----\n%A"
+	 "ruckus.org" "tracing code" (cc-mode c-mode makefile-gmake-mode))))
+
 ;; add my projects to ibuffer-saved-filter-groups
 (setq ibuffer-saved-filter-groups
       (cons (loop for item in (find "default" ibuffer-saved-filter-groups :key #'car :test #'equal)
