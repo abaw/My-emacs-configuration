@@ -46,9 +46,9 @@
       (cons (loop for item in (find "default" ibuffer-saved-filter-groups :key #'car :test #'equal)
 		  ;; my projects
 		  when (and (listp item) (equal (car item) "Programming"))
-		  collect '("Project k10.git" (filename . "/home/abaw/k10.git/"))
-		  and collect '("Project k9.git" (filename . "/home/abaw/k9.git/"))
-		  and collect '("Project 8820.git" (filename . "/home/abaw/projs/8820/8820.git/"))
+		  collect '("Project WSG" (filename . "/home/abaw/p4dir/wsg"))
+		  and collect '("Project Mainline" (filename . "/home/abaw/p4dir/mainline"))
+		  and collect '("Project Release Toronto" (filename . "/home/abaw/p4dir/release/toronto"))
 		  ;; end of my projects
 		  when (or (atom item) (not (string-match "^Project " (car item))))
 		  collect item)
