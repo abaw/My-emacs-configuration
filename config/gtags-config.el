@@ -25,6 +25,8 @@
 	      (setenv "GTAGSLIBPATH" old-path))
 	  ad-do-it)))
 
+    (add-to-list 'anything-for-files-prefered-list 'anything-c-source-gtags-files)
+
     (setq anything-gtags-enable-initial-pattern t)
     (define-key gtags-mode-map (kbd "M-.") 'my-gtags-find)))
 
