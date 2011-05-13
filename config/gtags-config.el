@@ -14,6 +14,17 @@
 	  (call-interactively 'anything-gtags-select)
 	(call-interactively 'gtags-find-tag)))
 
+    (defadvice gtags-goto-tag (around gtags-lib-path first (&rest ignored-args) activate)
+      "using gtags-lib-path as our GTASLIBPATH environment
+      variable if it is set."
+      (let ()
+	(if (and (boundp 'gtags-lib-path) gtags-lib-path)
+	    (let ((old-path (getenv "GTAGSLIBPATH")))
+	      (setenv "GTAGSLIBPATH" gtags-lib-path)
+	      ad-do-it
+	      (setenv "GTAGSLIBPATH" old-path))
+	  ad-do-it)))
+
     (setq anything-gtags-enable-initial-pattern t)
     (define-key gtags-mode-map (kbd "M-.") 'my-gtags-find)))
 
