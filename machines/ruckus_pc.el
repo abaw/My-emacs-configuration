@@ -38,7 +38,7 @@
 (setq org-directory "~/orgs/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (setq org-remember-templates
-      '(("Code" ?c "** %^{TITLE}\n%?\n#+begin_src %(let ((mode (format \"%s\" org-select-template-temp-major-mode))) (substring mode 0 (string-match \"-mode\" mode)))\n%i\n#+end_src\n-----\n%A"
+      '(("Code" ?c "** %?\n----\n%a"
 	 "ruckus.org" "tracing code" (cc-mode c-mode makefile-gmake-mode))))
 
 ;; add my projects to ibuffer-saved-filter-groups
