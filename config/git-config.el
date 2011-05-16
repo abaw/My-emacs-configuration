@@ -21,7 +21,7 @@
 					    default-directory))
 		   (let* ((top-dir (file-truename it))
 			  (default-directory top-dir)
-			  (signature (magit-shell (magit-format-git-command "rev-parse --verify HEAD" nil))))
+			  (signature (magit-rev-parse "HEAD")))
 
 		     (unless (and anything-c-source-git-project-files-cache
 				  (third anything-c-source-git-project-files-cache)
@@ -35,7 +35,7 @@
 				   (anything-candidate-buffer 'global)))
 		       (with-current-buffer (third anything-c-source-git-project-files-cache)
 			 (dolist (filename (mapcar (lambda (file) (concat default-directory file))
-						   (magit-shell-lines (magit-format-git-command "ls-files" nil))))
+						   (magit-git-lines "ls-files")))
 			   (insert filename)
 			   (newline))))
 		     (anything-candidate-buffer (third anything-c-source-git-project-files-cache)))
