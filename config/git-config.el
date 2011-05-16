@@ -2,6 +2,8 @@
 ;; (autoload 'git-blame-mode "git-blame"
 ;;   "Minor mode for incremental blame for Git." t)
 
+(add-to-list 'load-path (concat my-emacs-lisp-dir (file-name-as-directory "magit")))
+
 (when (abaw-try-to-require 'magit)
   (defun magit-grep (grep-command)
     "grep using magit-grep"
