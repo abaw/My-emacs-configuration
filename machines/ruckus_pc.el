@@ -13,6 +13,7 @@
 
 (add-to-list 'load-path my-emacs-config-dir)
 (add-to-list 'load-path my-emacs-lisp-dir)
+(add-to-list 'Info-default-directory-list (file-name-as-directory (concat my-emacs-dir "info")))
 
 (load "basic-config")
 (load "cc-config")
