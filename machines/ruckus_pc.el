@@ -39,7 +39,8 @@
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (setq org-remember-templates
       '(("Code" ?c "** %?\n----\n%a"
-	 "ruckus.org" "tracing code" (cc-mode c-mode makefile-gmake-mode))))
+	 "ruckus.org" "tracing code" (cc-mode c-mode makefile-gmake-mode))
+	("Place" ?p "* %(format \"[[file:%s]]\" (or (with-current-buffer org-select-template-original-buffer (bookmark-buffer-file-name)) (error \"no file associated with this buffer\")))\n" "places.org" "new places" t)))
 
 ;; add my projects to ibuffer-saved-filter-groups
 (setq ibuffer-saved-filter-groups
