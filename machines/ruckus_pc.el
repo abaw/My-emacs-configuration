@@ -34,6 +34,11 @@
 
 (setenv "P4CONFIG" ".p4config")
 (load "p4-config")
+(load "term-config")
+
+;; set the browser
+(setq browse-url-generic "opera")
+(setq browse-url-browser-function 'browse-url-generic)
 
 ;; org-remember templates
 (setq org-directory "~/orgs/")
