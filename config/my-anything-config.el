@@ -8,4 +8,6 @@
 	  anything-c-moccur-higligt-info-line-flag)
     (add-hook 'dired-mode-hook
 	      '(lambda ()
-		 (local-set-key (kbd "O") 'anything-c-moccur-dired-do-moccur-by-moccur)))))
+		 (local-set-key (kbd "O") 'anything-c-moccur-dired-do-moccur-by-moccur))))
+
+  (abaw-try-to-require 'anything-match-plugin))
