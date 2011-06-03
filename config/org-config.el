@@ -15,5 +15,16 @@
 				 (ditaa . t)))
 
   ;; configure remember if we have remember installed(this is packed with Emacs 23)
-  (when (fboundp 'remember)
-    (org-remember-insinuate)))
+  ;; no more using remember because we have better org-capture
+  ;; (when (fboundp 'remember)
+  ;;   (org-remember-insinuate))
+
+  ;; some help functions
+  (defun abaw-org-export-pdf-by-html ()
+    "export current org file to pdf by wkhtmltopdf program"
+    (let* ((file-without-ext (file-name-sans-extension (buffer-file-name)))
+	   (html-file (concat file-without-ext ".html"))
+	   (pdf-file  (concat file-without-ext ".pdf")))
+      (when (or (not (file-exists-p pdf-file)) (yes-or-no-p (format "%s already existed, overwrite it?" pdf-file)))
+	(call-interactively 'org-export-as-html)
+	(shell-command (format "wkhtmltopdf %s %s" html-file pdf-file))))))
