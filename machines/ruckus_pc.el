@@ -52,7 +52,7 @@
       (cons (loop for item in (find "default" ibuffer-saved-filter-groups :key #'car :test #'equal)
 		  ;; my projects
 		  when (and (listp item) (equal (car item) "Programming"))
-		  collect '("Project WSG" (filename . "/home/abaw/p4dir/wsg"))
+		  collect '("Project WSG" (filename . "/home/abaw/p4dir/mainline/wsg"))
 		  and collect '("Project Mainline" (filename . "/home/abaw/p4dir/mainline"))
 		  and collect '("Project Release Toronto" (filename . "/home/abaw/p4dir/release/toronto"))
 		  ;; end of my projects
@@ -69,6 +69,8 @@
  '(cscope-do-not-update-database t)
  '(doxymacs-doxygen-style "Qt")
  '(flyspell-use-meta-tab nil)
+ '(ibuffer-saved-filter-groups (quote (("default" ("Org" (mode . org-mode)) ("Magit" (mode . magit-mode)) ("Project WSG" (filename . "/home/abaw/p4dir/wsg")) ("Project Mainline" (filename . "/home/abaw/p4dir/mainline")) ("Project Release Toronto" (filename . "/home/abaw/p4dir/release/toronto")) ("Programming" (or (mode . c-mode) (mode . c++-mode) (mode . perl-mode) (mode . python-mode) (mode . lisp-mode) (mode . emacs-lisp-mode)))))))
+ '(ibuffer-saved-filters (quote (("server buffer" ((predicate . server-buffer-clients))) ("gnus" ((or (mode . message-mode) (mode . mail-mode) (mode . gnus-group-mode) (mode . gnus-summary-mode) (mode . gnus-article-mode)))) ("programming" ((or (mode . emacs-lisp-mode) (mode . cperl-mode) (mode . c-mode) (mode . java-mode) (mode . idl-mode) (mode . lisp-mode)))))))
  '(yas/trigger-key "<C-tab>"))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
