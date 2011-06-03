@@ -22,7 +22,7 @@
 (load "doremi-config")
 (load "git-config")
 (load "org-config")
-;;(load "slime-config")
+(load "slime-config")
 (load "ido-config")
 (load "my-anything-config")
 (load "unbind-key-config")
