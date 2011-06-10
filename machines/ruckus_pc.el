@@ -35,6 +35,7 @@
 (setenv "P4CONFIG" ".p4config")
 (load "p4-config")
 (load "term-config")
+(load "bash-config")
 
 ;; set the browser
 (setq browse-url-generic "opera")
