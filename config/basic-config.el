@@ -56,6 +56,7 @@
 (global-set-key (kbd "C-x <") 'abaw-scroll-to-current-column)
 (global-set-key (kbd "M-F") 'forward-part-in-word)
 (global-set-key (kbd "M-B") 'backward-part-in-word)
+(global-set-key (kbd "C-x F") 'find-file-at-point)
 (define-key universal-argument-map [?c] 'my-column-argument)
 
 ;; categories of buffers
@@ -93,7 +94,7 @@
 (set-keyboard-coding-system 'utf-8)
 
 ;; wrap long lines
-(set-default 'truncate-lines t)
+(set-default 'truncate-lines nil)
 (setq truncate-partial-width-windows nil)
 
 ;; get best highlighting
@@ -156,4 +157,8 @@
   (add-hook 'minibuffer-setup-hook (lambda ()
 				     (if (eq this-command 'eval-expression)
 					 (paredit-mode 1)))))
+
+(abaw-try-to-require 'moccur-edit)
+(when (abaw-try-to-require 'iedit)
+  (global-set-key (kbd "C-c ;") 'iedit-mode))
 
