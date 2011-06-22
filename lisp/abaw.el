@@ -262,3 +262,30 @@ definitions and store them in the kill ring for pasting."
   (unless (re-search-backward "[A-Z]" (car (bounds-of-thing-at-point 'word))
 			   t)
       (backward-word)))
+
+(defun edit-in-mode (start end mode)
+  "edit selected text in different major mode"
+  (interactive "r\nCMajor mode:")
+  (unless (equal (substring (format "%s" mode) -5) "-mode")
+    (error "%s is not a major mode" mode))
+
+  (let ((overlay (make-overlay start end nil t t))
+	(old-value (buffer-substring-no-properties start end)))
+    (switch-to-buffer (generate-new-buffer (concat (buffer-name) "-region")))
+    (insert old-value)
+    (call-interactively mode)
+    (local-set-key (kbd "C-c C-c")
+		   (lexical-let ((overlay overlay))
+		     (lambda ()
+		       "commit edit result"
+		       (interactive)
+		       (let ((new-value (buffer-string))
+			     (start (overlay-start overlay))
+			     (end (overlay-end overlay)))
+			 (with-current-buffer (overlay-buffer overlay)
+			   (goto-char start)
+			   (delete-region start end)
+			   (insert new-value))
+			 (kill-buffer)))))))
+
+
