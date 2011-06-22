@@ -7,3 +7,4 @@
 ;;   (add-hook 'slime-repl-mode-hook (lambda () (paredit-mode +1))))
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
 (setq inferior-lisp-program "sbcl")
+(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
