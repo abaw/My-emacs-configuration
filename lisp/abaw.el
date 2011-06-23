@@ -263,7 +263,7 @@ definitions and store them in the kill ring for pasting."
 			   t)
       (backward-word)))
 
-(defun edit-in-mode (start end mode)
+(defun edit-region (start end mode)
   "edit selected text in different major mode"
   (interactive "r\nCMajor mode:")
   (unless (equal (substring (format "%s" mode) -5) "-mode")
@@ -286,6 +286,7 @@ definitions and store them in the kill ring for pasting."
 			   (goto-char start)
 			   (delete-region start end)
 			   (insert new-value))
+			 (delete-overlay overlay)
 			 (kill-buffer)))))))
 
 
