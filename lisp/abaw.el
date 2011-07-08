@@ -290,3 +290,7 @@ definitions and store them in the kill ring for pasting."
 			 (kill-buffer)))))))
 
 
+(define-minor-mode sticky-window-mode
+  "when enabled, this window is dedicated for its current buffer."
+  :lighter "*S*"
+  (set-window-dedicated-p (get-buffer-window) sticky-window-mode))
