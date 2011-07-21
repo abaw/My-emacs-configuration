@@ -8,6 +8,16 @@
 	    #'(lambda ()
 		(flyspell-mode t)))
 
+  ;; added link type "latex", use this [latex:xxx][yyy] => \xxx{yyy}
+  (org-add-link-type
+   "latex" nil
+   (lambda (path desc format)
+     (cond
+      ((eq format 'html)
+       (format "<span class=\"%s\">%s</span>" path desc))
+      ((eq format 'latex)
+       (format "\\%s{%s}" path desc)))))
+
   (abaw-try-to-require 'org-s5)
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
   (org-babel-do-load-languages 'org-babel-load-languages
