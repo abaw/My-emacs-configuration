@@ -99,7 +99,8 @@ the leftmost column on screen."
     (rename-buffer
      (format "%s:%s"
              (file-remote-p (buffer-file-name) 'method)
-             (buffer-name)))))
+             (buffer-name))
+     t)))
 
 (add-hook 'find-file-hook
           'th-rename-tramp-buffer)
