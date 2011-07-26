@@ -36,9 +36,10 @@
 (load "p4-config")
 (load "term-config")
 (load "bash-config")
+(load "emms-config")
 
 ;; set the browser
-(setq browse-url-generic "opera")
+(setq browse-url-generic-program "opera")
 (setq browse-url-browser-function 'browse-url-generic)
 
 ;; org-remember templates
