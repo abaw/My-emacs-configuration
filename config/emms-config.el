@@ -1,6 +1,7 @@
 (require 'emms-setup)
 (emms-standard)
 (emms-default-players)
+(setq emms-repeat-playlist t)
 
 ;;; Add music file to playlist on '!', --lgfang
 (add-to-list 'dired-guess-shell-alist-user
