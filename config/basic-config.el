@@ -7,6 +7,9 @@
 ;; get rid of toolbar
 (tool-bar-mode 0)
 
+;; fill-column
+(set-default 'fill-column 80)
+
 ;; load my utilities
 (load "abaw")
 
