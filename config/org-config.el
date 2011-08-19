@@ -37,4 +37,9 @@
 	   (pdf-file  (concat file-without-ext ".pdf")))
       (when (or (not (file-exists-p pdf-file)) (yes-or-no-p (format "%s already existed, overwrite it?" pdf-file)))
 	(call-interactively 'org-export-as-html)
-	(shell-command (format "wkhtmltopdf %s %s" html-file pdf-file))))))
+	(shell-command (format "wkhtmltopdf %s %s" html-file pdf-file)))))
+
+  ;; org-beamer
+  (setq org-beamer-environments-extra
+	'(("overlayarea" "r" "\\begin{overlayarea}{\\textwidth}{\\textheight}" "\\end{overlayarea}")))
+)
