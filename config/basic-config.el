@@ -4,9 +4,6 @@
 ;; a bigger kill-ring buffer
 (setq kill-ring-max 200)
 
-;; get rid of toolbar
-(tool-bar-mode 0)
-
 ;; fill-column
 (set-default 'fill-column 80)
 
