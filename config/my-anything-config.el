@@ -4,7 +4,7 @@
   (defvar anything-c-source-open-files
     '((name . "Opened Files")
       (candidates . (lambda () (remove nil (mapcar 'buffer-file-name (buffer-list)))))
-      (action . '("Switch to buffer" . find-file))
+      (action . (("Switch to buffer" . find-file)))
       (action-transformer . (anything-c-transform-file-load-el anything-c-transform-file-browse-url))
       (candidate-transformer . (anything-c-w32-pathname-transformer anything-c-skip-boring-files anything-c-shorten-home-path))))
 
