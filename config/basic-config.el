@@ -162,3 +162,28 @@
 (when (abaw-try-to-require 'iedit)
   (global-set-key (kbd "C-c ;") 'iedit-mode))
 
+
+;; customize mode-line, not yet decided to use this
+(defun set-my-mode-line ()
+  ;; modifified from emacs-fu's post
+  (setq mode-line-format
+	(list
+	 ;; encoding
+	 mode-line-mule-info
+	 ;; End-of-line info
+	 mode-line-client
+	 mode-line-modified
+	 ;; buffer name and file name
+	 '(:eval (propertize " %b "
+			     'face 'font-lock-keyword-face
+			     'help-echo (buffer-file-name)))
+
+	 ;; line/column number and relative position
+	 mode-line-position
+
+	 ;; modes
+	 "("
+	 '(:eval (propertize "%m" 'face 'font-lock-comment-face))
+	 minor-mode-alist
+	 ")"
+	 "%-")))
