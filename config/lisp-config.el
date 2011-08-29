@@ -1,7 +1,9 @@
 ;; lisp hook
+(abaw-try-to-require 'hl-sexp)
 (defun my/lisp-hook ()
   (eldoc-mode t)
-  (hl-sexp-mode t)
+  (when
+      (fboundp 'hl-sexp-mode) (hl-sexp-mode t))
   (when (eq major-mode 'emacs-lisp-mode)
     (local-set-key (kbd "M-.") 'find-function)
     (local-set-key (kbd "M-*") 'pop-global-mark)))
