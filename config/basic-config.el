@@ -148,7 +148,7 @@
 
 ;; put emacs backup files all together
 
-(let ((backup-dir "~/.emacs_backups/"))
+(lexical-let ((backup-dir "~/.emacs_backups/"))
   (mkdir backup-dir t)
   (setq make-backup-file-name-function
 	(lambda (file) (concat backup-dir (file-name-nondirectory file) "~"))))
