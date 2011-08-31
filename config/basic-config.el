@@ -147,8 +147,11 @@
 (server-start)
 
 ;; put emacs backup files all together
-(setq make-backup-file-name-function
-      (lambda (file) (concat "~/.emacs_backups/" (file-name-nondirectory file) "~")))
+
+(let ((backup-dir "~/.emacs_backups/"))
+  (mkdir backup-dir t)
+  (setq make-backup-file-name-function
+	(lambda (file) (concat backup-dir (file-name-nondirectory file) "~"))))
 
 (when (abaw-try-to-require 'paredit)
   (add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
