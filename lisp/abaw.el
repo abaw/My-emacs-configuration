@@ -99,7 +99,8 @@ the leftmost column on screen."
     (rename-buffer
      (format "%s:%s"
              (file-remote-p (buffer-file-name) 'method)
-             (buffer-name)))))
+             (buffer-name))
+     t)))
 
 (add-hook 'find-file-hook
           'th-rename-tramp-buffer)
@@ -182,7 +183,7 @@ returned if REGEXP is non-nil. Note symlinks are not followed."
 definitions and store them in the kill ring for pasting."
   (interactive "r")
   (let ((decl (buffer-substring-no-properties begin end))
-	(class-name (c++-inclass-name)))
+	(class-name (save-excursion (goto-char begin) (c++-inclass-name))))
     (with-temp-buffer
       (c++-mode)
       (insert decl)
@@ -262,3 +263,35 @@ definitions and store them in the kill ring for pasting."
   (unless (re-search-backward "[A-Z]" (car (bounds-of-thing-at-point 'word))
 			   t)
       (backward-word)))
+
+(defun edit-region (start end mode)
+  "edit selected text in different major mode"
+  (interactive "r\nCMajor mode:")
+  (unless (equal (substring (format "%s" mode) -5) "-mode")
+    (error "%s is not a major mode" mode))
+
+  (let ((overlay (make-overlay start end nil t t))
+	(old-value (buffer-substring-no-properties start end)))
+    (switch-to-buffer (generate-new-buffer (concat (buffer-name) "-region")))
+    (insert old-value)
+    (call-interactively mode)
+    (local-set-key (kbd "C-c C-c")
+		   (lexical-let ((overlay overlay))
+		     (lambda ()
+		       "commit edit result"
+		       (interactive)
+		       (let ((new-value (buffer-string))
+			     (start (overlay-start overlay))
+			     (end (overlay-end overlay)))
+			 (with-current-buffer (overlay-buffer overlay)
+			   (goto-char start)
+			   (delete-region start end)
+			   (insert new-value))
+			 (delete-overlay overlay)
+			 (kill-buffer)))))))
+
+
+(define-minor-mode sticky-window-mode
+  "when enabled, this window is dedicated for its current buffer."
+  :lighter "*S*"
+  (set-window-dedicated-p (get-buffer-window) sticky-window-mode))

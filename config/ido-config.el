@@ -1,5 +1,5 @@
 (when (abaw-try-to-require 'ido)
-  (defadvice ido-ignore-item-p (around ido-wa first (item &rest other-args activate))
+  (defadvice ido-ignore-item-p (around ido-wa first (item &rest other-args) activate)
     "because ido-ignore-item-p may get a nil when there are
 killed buffers whose (buffer-name) return nil. We must filter nil
 values."
@@ -9,6 +9,8 @@ values."
   (ido-mode t)
   ;; this is kind of danger (fset 'read-file-name 'ido-read-file-name)
   (setq ido-enable-flex-matching t)
+  (setq ido-default-buffer-method 'selected-window)
+  (setq ido-default-file-method 'selected-window)
 
   (when (abaw-try-to-require 'smex)
     (add-hook 'after-init-hook 'smex-initialize)

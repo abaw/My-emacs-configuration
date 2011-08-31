@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: start a group of make file test cases
+# key: tt
+# condition: (member (file-name-nondirectory (buffer-file-name)) '("utils-test.mk"))
+# --
+\$(call start_test,${1:group description})
+$0
+\$(call stop_test,$1)

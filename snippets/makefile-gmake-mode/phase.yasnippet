@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: start a new phase in package rules.mk
+# key: phase
+# --
+\$(call package-phase-begin,${1:phase name})
+define phase
+$0
+endef
+\$(call package-phase-end)

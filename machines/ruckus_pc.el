@@ -13,16 +13,7 @@
 
 (add-to-list 'load-path my-emacs-config-dir)
 (add-to-list 'load-path my-emacs-lisp-dir)
-
-;;; This was installed by package-install.el.
-;;; This provides support for the package system and
-;;; interfacing with ELPA, the package archive.
-;;; Move this code earlier if you want to reference
-;;; packages in your .emacs.
-(when
-    (load
-     (expand-file-name "~/.emacs.d/elpa/package.el"))
-  (package-initialize))
+(add-to-list 'Info-default-directory-list (file-name-as-directory (concat my-emacs-dir "info")))
 
 (load "basic-config")
 (load "cc-config")
@@ -35,19 +26,36 @@
 (load "ido-config")
 (load "my-anything-config")
 (load "unbind-key-config")
-(load "ack-config")
-(load "doxymacs-config")
+;;(load "ack-config")
+;;(load "doxymacs-config")
 (load "header-config")
 (load "gtags-config")
+(load "auto-complete-config")
+
+(setenv "P4CONFIG" ".p4config")
+(load "p4-config")
+(load "term-config")
+(load "bash-config")
+
+;; set the browser
+(setq browse-url-generic-program "opera")
+(setq browse-url-browser-function 'browse-url-generic)
+
+;; org-remember templates
+(setq org-directory "~/orgs/")
+(setq org-default-notes-file (concat org-directory "notes.org"))
+(setq org-capture-templates
+      '(("c" "Code" entry (file+headline "ruckus.org" "tracing code") "** %?\n----\n%a")
+	("p" "Place" entry (file "places.org") "* %(format \"[[file:%s]]\" (or (with-current-buffer (org-capture-get :original-buffer) (bookmark-buffer-file-name)) (error \"no file associated with this buffer\")))\n")))
 
 ;; add my projects to ibuffer-saved-filter-groups
 (setq ibuffer-saved-filter-groups
       (cons (loop for item in (find "default" ibuffer-saved-filter-groups :key #'car :test #'equal)
 		  ;; my projects
 		  when (and (listp item) (equal (car item) "Programming"))
-		  collect '("Project k10.git" (filename . "/home/abaw/k10.git/"))
-		  and collect '("Project k9.git" (filename . "/home/abaw/k9.git/"))
-		  and collect '("Project 8820.git" (filename . "/home/abaw/projs/8820/8820.git/"))
+		  collect '("Project WSG" (filename . "/home/abaw/p4dir/mainline/wsg"))
+		  and collect '("Project Mainline" (filename . "/home/abaw/p4dir/mainline"))
+		  and collect '("Project Release Toronto" (filename . "/home/abaw/p4dir/release/toronto"))
 		  ;; end of my projects
 		  when (or (atom item) (not (string-match "^Project " (car item))))
 		  collect item)
@@ -62,6 +70,8 @@
  '(cscope-do-not-update-database t)
  '(doxymacs-doxygen-style "Qt")
  '(flyspell-use-meta-tab nil)
+ '(ibuffer-saved-filter-groups (quote (("default" ("Org" (mode . org-mode)) ("Magit" (mode . magit-mode)) ("Project WSG" (filename . "/home/abaw/p4dir/wsg")) ("Project Mainline" (filename . "/home/abaw/p4dir/mainline")) ("Project Release Toronto" (filename . "/home/abaw/p4dir/release/toronto")) ("Programming" (or (mode . c-mode) (mode . c++-mode) (mode . perl-mode) (mode . python-mode) (mode . lisp-mode) (mode . emacs-lisp-mode)))))))
+ '(ibuffer-saved-filters (quote (("server buffer" ((predicate . server-buffer-clients))) ("gnus" ((or (mode . message-mode) (mode . mail-mode) (mode . gnus-group-mode) (mode . gnus-summary-mode) (mode . gnus-article-mode)))) ("programming" ((or (mode . emacs-lisp-mode) (mode . cperl-mode) (mode . c-mode) (mode . java-mode) (mode . idl-mode) (mode . lisp-mode)))))))
  '(yas/trigger-key "<C-tab>"))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.

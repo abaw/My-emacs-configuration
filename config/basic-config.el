@@ -4,8 +4,8 @@
 ;; a bigger kill-ring buffer
 (setq kill-ring-max 200)
 
-;; get rid of toolbar
-(tool-bar-mode 0)
+;; fill-column
+(set-default 'fill-column 80)
 
 ;; load my utilities
 (load "abaw")
@@ -56,6 +56,7 @@
 (global-set-key (kbd "C-x <") 'abaw-scroll-to-current-column)
 (global-set-key (kbd "M-F") 'forward-part-in-word)
 (global-set-key (kbd "M-B") 'backward-part-in-word)
+(global-set-key (kbd "C-x F") 'find-file-at-point)
 (define-key universal-argument-map [?c] 'my-column-argument)
 
 ;; categories of buffers
@@ -93,7 +94,7 @@
 (set-keyboard-coding-system 'utf-8)
 
 ;; wrap long lines
-(set-default 'truncate-lines t)
+(set-default 'truncate-lines nil)
 (setq truncate-partial-width-windows nil)
 
 ;; get best highlighting
@@ -132,16 +133,15 @@
 (menu-bar-mode -99) ;; tool bar be accessed through C-mouse-3
 (set-fringe-style 0)
 
-;; the very nice install-elisp package
-(when (abaw-try-to-require 'install-elisp)
-  (setq install-elisp-repository-directory my-emacs-lisp-dir))
-
 ;; install the color theme for emacs when we got a window system
 (when (and (abaw-try-to-require 'color-theme) window-system)
  (color-theme-jedit-grey))
 
 ;; using cdargs - this is too bad, cause org-export not to work
 ;; (abaw-try-to-require 'cdargs)
+
+(when window-system
+  (setq server-raise-frame t))
 
 ;; start the server
 (server-start)
@@ -158,3 +158,32 @@
 				     (if (eq this-command 'eval-expression)
 					 (paredit-mode 1)))))
 
+(abaw-try-to-require 'moccur-edit)
+(when (abaw-try-to-require 'iedit)
+  (global-set-key (kbd "C-c ;") 'iedit-mode))
+
+
+;; customize mode-line, not yet decided to use this
+(defun set-my-mode-line ()
+  ;; modifified from emacs-fu's post
+  (setq mode-line-format
+	(list
+	 ;; encoding
+	 mode-line-mule-info
+	 ;; End-of-line info
+	 mode-line-client
+	 mode-line-modified
+	 ;; buffer name and file name
+	 '(:eval (propertize " %b "
+			     'face 'font-lock-keyword-face
+			     'help-echo (buffer-file-name)))
+
+	 ;; line/column number and relative position
+	 mode-line-position
+
+	 ;; modes
+	 "("
+	 '(:eval (propertize "%m" 'face 'font-lock-comment-face))
+	 minor-mode-alist
+	 ")"
+	 "%-")))

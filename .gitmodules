@@ -1,0 +1,6 @@
+[submodule "lisp/magit"]
+	path = lisp/magit
+	url = https://github.com/magit/magit.git
+[submodule "lisp/bash-completion"]
+	path = lisp/bash-completion
+	url = https://github.com/szermatt/emacs-bash-completion.git

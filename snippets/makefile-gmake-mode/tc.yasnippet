@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: a make file test case
+# condition: (member (file-name-nondirectory (buffer-file-name)) '("utils-test.mk"))
+# key: tc
+# --
+\$(call test_assert,${1:EXPR},${2:EXPECTED})

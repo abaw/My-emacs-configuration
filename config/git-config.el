@@ -2,6 +2,8 @@
 ;; (autoload 'git-blame-mode "git-blame"
 ;;   "Minor mode for incremental blame for Git." t)
 
+(add-to-list 'load-path (concat my-emacs-lisp-dir (file-name-as-directory "magit")))
+
 (when (abaw-try-to-require 'magit)
   (defun magit-grep (grep-command)
     "grep using magit-grep"
@@ -14,28 +16,31 @@
     (defvar anything-c-source-git-project-files
       '((name . "Files from Current GIT Project")
 	(init . (lambda ()
-		  (let* ((top-dir (file-truename (magit-get-top-dir (if (buffer-file-name)
-									(file-name-directory (buffer-file-name))
-								      default-directory))))
-			 (default-directory top-dir)
-			 (signature (magit-shell (magit-format-git-command "rev-parse --verify HEAD" nil))))
+		  (aif (magit-get-top-dir (if (buffer-file-name)
+					      (file-name-directory (buffer-file-name))
+					    default-directory))
+		   (let* ((top-dir (file-truename it))
+			  (default-directory top-dir)
+			  (signature (magit-rev-parse "HEAD")))
 
-		    (unless (and anything-c-source-git-project-files-cache
-				 (third anything-c-source-git-project-files-cache)
-				 (equal (first anything-c-source-git-project-files-cache) top-dir)
-				 (equal (second anything-c-source-git-project-files-cache) signature))
-		      (if (third anything-c-source-git-project-files-cache)
-			  (kill-buffer (third anything-c-source-git-project-files-cache)))
-		      (setq anything-c-source-git-project-files-cache
-			    (list top-dir
-				  signature
-				  (anything-candidate-buffer 'global)))
-		      (with-current-buffer (third anything-c-source-git-project-files-cache)
-			(dolist (filename (mapcar (lambda (file) (concat default-directory file))
-						  (magit-shell-lines (magit-format-git-command "ls-files" nil))))
-			  (insert filename)
-			  (newline))))
-		    (anything-candidate-buffer (third anything-c-source-git-project-files-cache)))))
+		     (unless (and anything-c-source-git-project-files-cache
+				  (third anything-c-source-git-project-files-cache)
+				  (equal (first anything-c-source-git-project-files-cache) top-dir)
+				  (equal (second anything-c-source-git-project-files-cache) signature))
+		       (if (third anything-c-source-git-project-files-cache)
+			   (kill-buffer (third anything-c-source-git-project-files-cache)))
+		       (setq anything-c-source-git-project-files-cache
+			     (list top-dir
+				   signature
+				   (anything-candidate-buffer 'global)))
+		       (with-current-buffer (third anything-c-source-git-project-files-cache)
+			 (dolist (filename (mapcar (lambda (file) (concat default-directory file))
+						   (magit-git-lines "ls-files")))
+			   (insert filename)
+			   (newline))))
+		     (anything-candidate-buffer (third anything-c-source-git-project-files-cache)))
+		   (anything-candidate-buffer 'global) ;; need to make a empty candicate buffer if here is not a git reposiroty
+		   )))
 
         (type . file)
 	(candidates-in-buffer)))
