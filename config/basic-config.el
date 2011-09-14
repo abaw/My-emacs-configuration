@@ -165,6 +165,9 @@
 ;; alias perl-mode to cperl-mode. cperl-mode seems to be slow if loaded on top of perl-mode
 (defalias 'perl-mode 'cperl-mode)
 
+;; enable ansi colors in comint modes
+(ansi-color-for-comint-mode-on)
+
 
 ;; customize mode-line, not yet decided to use this
 (defun set-my-mode-line ()
