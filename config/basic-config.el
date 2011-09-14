@@ -162,6 +162,9 @@
 (when (abaw-try-to-require 'iedit)
   (global-set-key (kbd "C-c ;") 'iedit-mode))
 
+;; alias perl-mode to cperl-mode. cperl-mode seems to be slow if loaded on top of perl-mode
+(defalias 'perl-mode 'cperl-mode)
+
 
 ;; customize mode-line, not yet decided to use this
 (defun set-my-mode-line ()
