@@ -171,6 +171,9 @@
 ;; enable ansi colors in comint modes
 (ansi-color-for-comint-mode-on)
 
+;; move on logical lines rather than visual lines
+(setq line-move-visual nil)
+
 
 ;; customize mode-line, not yet decided to use this
 (defun set-my-mode-line ()
