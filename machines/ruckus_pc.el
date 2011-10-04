@@ -41,10 +41,6 @@
 (setq browse-url-generic-program "opera")
 (setq browse-url-browser-function 'browse-url-generic)
 
-
-;; use p4.el
-(require 'p4)
-
 ;; org-remember templates
 (setq org-directory "~/orgs/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
