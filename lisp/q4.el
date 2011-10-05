@@ -33,4 +33,10 @@
    (when (p4-lowlevel-command-or-error (q4-args "revert" current-filename))
      (revert-buffer t t))))
 
+;; issue p4 submit cause emacs to freeze
+;; (defun q4-submit ()
+;;   "do \"p4 submit\""
+;;   (interactive)
+;;   (p4-lowlevel-command-or-error (q4-args "submit")))
+
 (provide 'q4)
