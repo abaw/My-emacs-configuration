@@ -41,12 +41,15 @@
 (setq browse-url-generic-program "opera")
 (setq browse-url-browser-function 'browse-url-generic)
 
-;; org-remember templates
+
 (setq org-directory "~/orgs/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
+(setq org-agenda-files (list "~/orgs/gtd.org"))
+;; org-capture templates
 (setq org-capture-templates
       '(("c" "Code" entry (file+headline "ruckus.org" "tracing code") "** %?\n----\n%a")
-	("p" "Place" entry (file "places.org") "* %(format \"[[file:%s]]\" (or (with-current-buffer (org-capture-get :original-buffer) (bookmark-buffer-file-name)) (error \"no file associated with this buffer\")))\n")))
+	("p" "Place" entry (file "places.org") "* %(format \"[[file:%s]]\" (or (with-current-buffer (org-capture-get :original-buffer) (bookmark-buffer-file-name)) (error \"no file associated with this buffer\")))\n")
+	("t" "Tasks" entry (file+headline "gtd.org" "Tasks") "* TODO %^{Brief Description} %^g\n%?\nAdded: %U")))
 
 ;; add my projects to ibuffer-saved-filter-groups
 (setq ibuffer-saved-filter-groups
