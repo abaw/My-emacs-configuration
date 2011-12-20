@@ -29,8 +29,10 @@
 
 ;; cua mode for rectangle selection
 (when (fboundp 'cua-mode)
-  (cua-mode t)
-  (setq cua-enable-cua-keys 'shift))
+  (setq cua-enable-cua-keys nil
+	cua-highlight-region-shift-only nil
+	cua-toggle-set-mark nil)
+  (cua-mode t))
 
 ;; load various useful packages
 (mapc  #'(lambda (package) (abaw-try-to-require package))
