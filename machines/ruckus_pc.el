@@ -49,7 +49,11 @@
 (setq org-capture-templates
       '(("c" "Code" entry (file+headline "ruckus.org" "tracing code") "** %?\n----\n%a")
 	("p" "Place" entry (file "places.org") "* %(format \"[[file:%s]]\" (or (with-current-buffer (org-capture-get :original-buffer) (bookmark-buffer-file-name)) (error \"no file associated with this buffer\")))\n")
-	("t" "Tasks" entry (file+headline "gtd.org" "Tasks") "* TODO %^{Brief Description} %^g\n%?\nAdded: %U")))
+	("t" "Tasks" entry (file+headline "gtd.org" "Tasks") "* TODO %^{Brief Description} %^g\n%?\nAdded: %U")
+	("j" "Journal" entry (file+datetree "diary.org") "* %?\n%U\n  %i" :clock-in t :clock-resume t)
+	("s" "Someday" entry (file "someday.org") "* %?\n%U\n %i")
+	("C" "Changelists" entry (file+headline "gtd.org" "Changelists")
+	 (function abaw-org-template-changelist))))
 
 ;; add my projects to ibuffer-saved-filter-groups
 (setq ibuffer-saved-filter-groups

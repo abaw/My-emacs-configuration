@@ -2,12 +2,35 @@
 (add-to-list 'load-path (concat my-emacs-lisp-dir (file-name-as-directory "org-mode") (file-name-as-directory "contrib") "lisp"))
 
 (when (abaw-try-to-require 'org)
-  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "<f12>") 'org-agenda)
+  (global-set-key (kbd "C-S-r") 'org-capture)
   (setq org-todo-keywords
 	'((sequence "TODO" "WAIT" "|" "DONE" "DELEGATED" "CANCELED")))
   (add-hook 'org-mode-hook
 	    #'(lambda ()
 		(flyspell-mode t)))
+
+  ;; highlists persists after modifying buffer
+  (setq org-remove-highlights-with-change nil)
+  (setq org-agenda-custom-commands
+	'((" " "Agenga"
+	   ((agenda "" nil)
+	    (tags-todo "-PROJECT/!-STARTED-NEXT-WAITING"
+		       ((org-agenda-overriding-header "Tasks")
+			(org-agenda-skip-function
+			 '(org-agenda-skip-entry-if 'scheduled 'deadline))
+			(org-agenda-sorting-strategy
+			 '(category-keep todo-state-down))))
+	    (tags-todo "+PROJECT"
+		       ((org-agenda-overriding-header "Project Tasks")
+			(org-agenda-skip-function
+			 '(org-agenda-skip-entry-if 'scheduled 'deadline))
+			(org-agenda-sorting-strategy
+			 '(category-keep todo-state-down))))
+	    (tags-todo "+BACKGROUND"
+		       ((org-agenda-overriding-header "Background Tasks")))
+	    (todo "WAITING"
+		  ((org-agenda-overriding-header "Waiting Tasks")))))))
 
   ;; added link type "latex", use this [latex:xxx][yyy] => \xxx{yyy}
   (org-add-link-type
