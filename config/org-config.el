@@ -15,7 +15,7 @@
   (setq org-agenda-custom-commands
 	'((" " "Agenga"
 	   ((agenda "" nil)
-	    (tags-todo "-PROJECT/!-STARTED-NEXT-WAITING"
+	    (tags-todo "-PROJECT-INTEGRATION/!-STARTED-WAITING"
 		       ((org-agenda-overriding-header "Tasks")
 			(org-agenda-skip-function
 			 '(org-agenda-skip-entry-if 'scheduled 'deadline))
@@ -27,10 +27,36 @@
 			 '(org-agenda-skip-entry-if 'scheduled 'deadline))
 			(org-agenda-sorting-strategy
 			 '(category-keep todo-state-down))))
+	    (tags-todo "+INTEGRATION/!-STARTED-WAITING"
+		       ((org-agenda-overriding-header "Unintegrated Changelists")
+			(org-agenda-skip-function
+			 '(org-agenda-skip-entry-if 'scheduled 'deadline))
+			(org-agenda-sorting-strategy
+			 '(todo-state-down user-defined-up)))) ;; user-defined-up make entries with low NUMBER first.
 	    (tags-todo "+BACKGROUND"
 		       ((org-agenda-overriding-header "Background Tasks")))
 	    (todo "WAITING"
 		  ((org-agenda-overriding-header "Waiting Tasks")))))))
+
+  ;; the function used to compare two entries
+  (defun abaw-org-cmp-entry (a b)
+    "return +1 if A > B, return -1 if a < B, return 0 if a = B"
+    (labels ((get-number (entry)
+			 "return the associated number of an entry or nil if no such number"
+			 (awhen (cdr (assoc "NUMBER"
+					    (org-entry-properties
+					     (get-text-property 0 'org-hd-marker entry) 'all "NUMBER")))
+				(string-to-number it))))
+      (let (na nb)
+	(if (and (setq na (get-number a))
+		 (setq nb (get-number b)))
+	    (cond
+	     ((< na nb) -1)
+	     ((> na nb) +1)
+	     (t nil))
+	  ;; no NUMBER property, just treat each entry equally
+	  0))))
+  (setq org-agenda-cmp-user-defined 'abaw-org-cmp-entry)
 
   ;; added link type "latex", use this [latex:xxx][yyy] => \xxx{yyy}
   (org-add-link-type
