@@ -5,7 +5,9 @@
   (global-set-key (kbd "<f12>") 'org-agenda)
   (global-set-key (kbd "C-S-r") 'org-capture)
   (setq org-todo-keywords
-	'((sequence "TODO" "WAIT" "|" "DONE" "DELEGATED" "CANCELED")))
+	'((sequence "MAYBE(m)" "TODO(t)" "STARTED(s)" "WAITING(w)" "POSTPONED(p)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED(d)" )))
+  (setq org-todo-state-tags-triggers
+	'((done ("DONE" . t))))
   (add-hook 'org-mode-hook
 	    #'(lambda ()
 		(flyspell-mode t)))
