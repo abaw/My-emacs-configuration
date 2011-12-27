@@ -32,7 +32,8 @@
 			(org-agenda-skip-function
 			 '(org-agenda-skip-entry-if 'scheduled 'deadline))
 			(org-agenda-sorting-strategy
-			 '(todo-state-down user-defined-up)))) ;; user-defined-up make entries with low NUMBER first.
+			 '(todo-state-down user-defined-up))
+			(org-agenda-prefix-format "  "))) ;; user-defined-up make entries with low NUMBER first.
 	    (tags-todo "+BACKGROUND"
 		       ((org-agenda-overriding-header "Background Tasks")))
 	    (todo "WAITING"
