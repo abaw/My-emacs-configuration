@@ -23,7 +23,7 @@
 			 '(org-agenda-skip-entry-if 'scheduled 'deadline))
 			(org-agenda-sorting-strategy
 			 '(category-keep todo-state-down))))
-	    (tags-todo "+PROJECT"
+	    (tags-todo "+PROJECT/!-STARTED-WAITING"
 		       ((org-agenda-overriding-header "Project Tasks")
 			(org-agenda-skip-function
 			 '(org-agenda-skip-entry-if 'scheduled 'deadline))
