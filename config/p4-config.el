@@ -31,8 +31,15 @@
      (unless (and cl (number-or-marker-p cl))
        (error "changelist should be a number"))
      (let ((tags (abaw-p4-describe cl)))
-       (format "* TODO %d %s INTEGRATION:%%^g\n%%?\nAffected files:%s\nAdded: %%U"
+       (format "* TODO %d %s %%^g
+:PROPERTIES:
+:NUMBER:   %d
+:END:
+%%?
+Affected files:%s
+Added: %%U\n"
 	       cl
 	       (cadr (assoc-string "desc" tags))
+	       cl
 	       (abaw-p4-describe-get-files-string tags)))))
 )
