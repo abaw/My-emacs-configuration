@@ -102,12 +102,12 @@
     will prompt you to input the date. "
     (interactive)
 
-    (let ((fmt "%Y-%m-%d %H:%M")
+    (let* ((fmt "%Y-%m-%d %H:%M")
 	  (start-time (format-time-string
-		       "%Y-%m-%d"
+		       fmt
 		       (org-read-date t t match nil (org-read-date t t "-1w"))))
 	  (end-time (format-time-string
-		     "%Y-%m-%d %H:%M"
+		     fmt
 		     (org-read-date t t "now")))
 	  (review-buffer (get-buffer-create "*REVIEW-CLOCKING*")))
       (with-current-buffer review-buffer
