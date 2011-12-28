@@ -4,3 +4,6 @@
 [submodule "lisp/bash-completion"]
 	path = lisp/bash-completion
 	url = https://github.com/szermatt/emacs-bash-completion.git
+[submodule "lisp/ibus"]
+	path = lisp/ibus
+	url = git@github.com:abaw/ibus.git

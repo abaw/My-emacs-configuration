@@ -36,6 +36,7 @@
 (load "p4-config")
 (load "term-config")
 (load "bash-config")
+(load "ibus-config")
 
 ;; set the browser
 (setq browse-url-generic-program "opera")
