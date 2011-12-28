@@ -39,7 +39,10 @@
 	    (tags-todo "+BACKGROUND"
 		       ((org-agenda-overriding-header "Background Tasks")))
 	    (todo "WAITING"
-		  ((org-agenda-overriding-header "Waiting Tasks")))))))
+		  ((org-agenda-overriding-header "Waiting Tasks")))))
+
+	  ("w" "Last Week Clocking Review"
+	   ((abaw-org-review-clocking "-1w" nil)))))
 
   ;; the function used to compare two entries
   (defun abaw-org-cmp-entry (a b)
@@ -92,7 +95,37 @@
 	(call-interactively 'org-export-as-html)
 	(shell-command (format "wkhtmltopdf %s %s" html-file pdf-file)))))
 
+  (defun abaw-org-review-clocking (&optional match)
+    "Reviewing clocking data until now. MATCH is a time
+    specification like \"-1w\" or \"2011-12-25\". The MATCH argument is for easily
+    used in org-agenda. If MATCH is not passed, this function
+    will prompt you to input the date. "
+    (interactive)
+
+    (let ((fmt "%Y-%m-%d %H:%M")
+	  (start-time (format-time-string
+		       "%Y-%m-%d"
+		       (org-read-date t t match nil (org-read-date t t "-1w"))))
+	  (end-time (format-time-string
+		     "%Y-%m-%d %H:%M"
+		     (org-read-date t t "now")))
+	  (review-buffer (get-buffer-create "*REVIEW-CLOCKING*")))
+      (with-current-buffer review-buffer
+	(erase-buffer)
+	(unless (eq major-mode 'org-mode)
+	  (org-mode))
+
+	(insert (format "#+BEGIN: clocktable :scope agenda :tstart \"%s\" :tend \"%s\""
+			start-time
+			end-time))
+	(newline)
+	(set-mark (point))
+	(insert "#+END:")
+	(newline)
+	(pop-to-mark-command)
+	(org-dblock-update)
+      (switch-to-buffer review-buffer))))
+
   ;; org-beamer
   (setq org-beamer-environments-extra
-	'(("overlayarea" "r" "\\begin{overlayarea}{\\textwidth}{\\textheight}" "\\end{overlayarea}")))
-)
+	'(("overlayarea" "r" "\\begin{overlayarea}{\\textwidth}{\\textheight}" "\\end{overlayarea}"))))
