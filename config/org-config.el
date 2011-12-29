@@ -4,19 +4,46 @@
 (when (abaw-try-to-require 'org)
   (global-set-key (kbd "<f12>") 'org-agenda)
   (global-set-key (kbd "C-S-r") 'org-capture)
-  (setq org-todo-keywords
-	'((sequence "MAYBE(m)" "TODO(t)" "STARTED(s)" "WAITING(w)" "POSTPONED(p)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED(d)" )))
-  (setq org-todo-state-tags-triggers
-	'((done ("DONE" . t))))
+
   (add-hook 'org-mode-hook
 	    #'(lambda ()
 		(flyspell-mode t)))
 
+  (setq org-todo-keywords
+	'((sequence "MAYBE(m)" "TODO(t)" "STARTED(s)" "WAITING(w)" "POSTPONED(p)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED(d)" )))
+
+  (setq org-todo-state-tags-triggers
+	'((done ("DONE" . t) ("STARTED" . t))
+	  ("STARTED" ("STARTED" .t))
+	  ("WAITING" ("STARTED" .t))))
+
+  ;; change todo to STARTED while clocking in a tody entry which is in state "TODO" or "MAYBE"
+  (defun abaw-org-update-state-for-current-clock-entry ()
+    "Updates the todo state to \"STARTED\" if current clock entry
+    is a todo entry and in state \"TODO\" or \"MAYBE\". "
+
+    (unless (org-clocking-p)
+      (error "not current clocking entry"))
+
+     (save-excursion
+       (save-window-excursion
+	 (org-clock-goto)
+	 (awhen (org-get-todo-state)
+		(when (member it '("TODO" "MAYBE"))
+		  (org-todo "STARTED"))))))
+
+  (add-hook 'org-clock-in-hook 'abaw-org-update-state-for-current-clock-entry)
+
   ;; highlists persists after modifying buffer
   (setq org-remove-highlights-with-change nil)
+
   (setq org-agenda-custom-commands
 	'((" " "Agenga"
 	   ((agenda "" nil)
+	    (tags-todo "+STARTED"
+		       ((org-agenda-overriding-header "Started Tasks")
+			(org-agenda-sorting-strategy
+			 '(category-keep todo-state-down))))
 	    (tags-todo "-PROJECT-INTEGRATION/!-STARTED-WAITING"
 		       ((org-agenda-overriding-header "Tasks")
 			(org-agenda-skip-function
@@ -37,9 +64,7 @@
 			 '(todo-state-down user-defined-up))
 			(org-agenda-prefix-format "  "))) ;; user-defined-up make entries with low NUMBER first.
 	    (tags-todo "+BACKGROUND"
-		       ((org-agenda-overriding-header "Background Tasks")))
-	    (todo "WAITING"
-		  ((org-agenda-overriding-header "Waiting Tasks")))))
+		       ((org-agenda-overriding-header "Background Tasks")))))
 
 	  ("w" "Last Week Clocking Review"
 	   ((abaw-org-review-clocking "-1w" nil)))))
@@ -103,13 +128,13 @@
     (interactive)
 
     (let* ((fmt "%Y-%m-%d %H:%M")
-	  (start-time (format-time-string
-		       fmt
-		       (org-read-date t t match nil (org-read-date t t "-1w"))))
-	  (end-time (format-time-string
-		     fmt
-		     (org-read-date t t "now")))
-	  (review-buffer (get-buffer-create "*REVIEW-CLOCKING*")))
+	   (start-time (format-time-string
+			fmt
+			(org-read-date t t match nil (org-read-date t t "-1w"))))
+	   (end-time (format-time-string
+		      fmt
+		      (org-read-date t t "now")))
+	   (review-buffer (get-buffer-create "*REVIEW-CLOCKING*")))
       (with-current-buffer review-buffer
 	(erase-buffer)
 	(unless (eq major-mode 'org-mode)
@@ -124,7 +149,7 @@
 	(newline)
 	(pop-to-mark-command)
 	(org-dblock-update)
-      (switch-to-buffer review-buffer))))
+	(switch-to-buffer review-buffer))))
 
   ;; org-beamer
   (setq org-beamer-environments-extra
