@@ -45,8 +45,8 @@
 
 (setq org-directory "~/orgs/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
-(setq org-agenda-files (list "~/orgs/gtd.org"))
-;; org-capture templates
+(setq org-agenda-files (list "~/orgs/gtd.org" "~/orgs/diary.org" "~/orgs/meetings.org" "~/orgs/someday.org"))
+;; org-capture templates 
 (setq org-capture-templates
       '(("c" "Code" entry (file+headline "ruckus.org" "tracing code") "** %?\n----\n%a")
 	("p" "Place" entry (file "places.org") "* %(format \"[[file:%s]]\" (or (with-current-buffer (org-capture-get :original-buffer) (bookmark-buffer-file-name)) (error \"no file associated with this buffer\")))\n")
