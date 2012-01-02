@@ -10,7 +10,7 @@
 		(flyspell-mode t)))
 
   (setq org-todo-keywords
-	'((sequence "MAYBE(m)" "TODO(t)" "STARTED(s)" "WAITING(w)" "POSTPONED(p)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED(d)" )))
+	'((sequence "MAYBE(m)" "TODO(t)" "STARTED(s)" "WAITING(w)" "POSTPONED(p)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED(D)" )))
 
   (setq org-todo-state-tags-triggers
 	'((done ("DONE" . t) ("STARTED" . t))
