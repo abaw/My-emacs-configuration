@@ -59,6 +59,7 @@
 (global-set-key (kbd "M-F") 'forward-part-in-word)
 (global-set-key (kbd "M-B") 'backward-part-in-word)
 (global-set-key (kbd "C-x F") 'find-file-at-point)
+(global-set-key (kbd "C-c '") 'edit-region)
 (define-key universal-argument-map [?c] 'my-column-argument)
 
 ;; categories of buffers
