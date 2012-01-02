@@ -41,7 +41,9 @@
 	'((" " "Agenga"
 	   ((agenda "" nil)
 	    (tags-todo "+STARTED"
-		       ((org-agenda-overriding-header "Started Tasks")
+		       ((org-agenda-overriding-header "Started and Not Finished Tasks")
+			(org-agenda-skip-function
+			 '(org-agenda-skip-entry-if 'scheduled))
 			(org-agenda-sorting-strategy
 			 '(category-keep todo-state-down))))
 	    (tags-todo "-PROJECT-INTEGRATION/!-STARTED-WAITING"
@@ -64,7 +66,7 @@
 			 '(todo-state-down user-defined-up))
 			(org-agenda-prefix-format "  "))) ;; user-defined-up make entries with low NUMBER first.
 	    (tags-todo "+BACKGROUND"
-		       ((org-agenda-overriding-header "Background Tasks")))))
+		       ((org-agenda-overriding-header "All Background Tasks")))))
 
 	  ("w" "Last Week Clocking Review"
 	   ((abaw-org-review-clocking "-1w" nil)))))
