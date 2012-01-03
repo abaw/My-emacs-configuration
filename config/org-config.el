@@ -25,12 +25,12 @@
     (unless (org-clocking-p)
       (error "not current clocking entry"))
 
-     (save-excursion
-       (save-window-excursion
-	 (org-clock-goto)
-	 (awhen (org-get-todo-state)
-		(when (member it '("TODO" "MAYBE"))
-		  (org-todo "STARTED"))))))
+    (save-excursion
+      (save-window-excursion
+	(org-clock-goto)
+	(awhen (org-get-todo-state)
+	       (when (member it '("TODO" "MAYBE"))
+		 (org-todo "STARTED"))))))
 
   (add-hook 'org-clock-in-hook 'abaw-org-update-state-for-current-clock-entry)
 
@@ -69,7 +69,13 @@
 		       ((org-agenda-overriding-header "All Background Tasks")))))
 
 	  ("w" "Last Week Clocking Review"
-	   ((abaw-org-review-clocking "-1w" nil)))))
+	   ((abaw-org-review-clocking "-1w" nil)))
+
+	  ("c" "All Changelists"
+	   ((tags "+CHANGELIST+NUMBER>0"
+		  ((org-agenda-sorting-strategy
+		    '(user-defined-up))
+		   (org-agenda-prefix-format "")))))))
 
   ;; the function used to compare two entries
   (defun abaw-org-cmp-entry (a b)
