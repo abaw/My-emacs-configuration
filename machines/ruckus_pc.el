@@ -45,12 +45,17 @@
 
 (setq org-directory "~/orgs/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
-(setq org-agenda-files (list "~/orgs/gtd.org" "~/orgs/diary.org" "~/orgs/meetings.org" "~/orgs/someday.org"))
+(setq org-agenda-files (list "~/orgs/gtd.org" "~/orgs/diary.org" "~/orgs/meetings.org" "~/orgs/someday.org" "~/orgs/refile.org"))
+(setq org-refile-targets '((nil . (:level . 1)) ;; re-file to be under a level 1 headline of current buffer
+			   ("~/orgs/diary.org" . (:level . 3)) ;; re-file to diary day headlines
+			   ("~/orgs/gtd.org" . (:tag . "PROJECT")) ;; re-file to a project
+			   ("~/orgs/gtd.org" . (:level . 1)) ;; re-file to be under a level 1 headline
+			   ))
 ;; org-capture templates 
 (setq org-capture-templates
       '(("c" "Code" entry (file+headline "ruckus.org" "tracing code") "** %?\n----\n%a")
 	("p" "Place" entry (file "places.org") "* %(format \"[[file:%s]]\" (or (with-current-buffer (org-capture-get :original-buffer) (bookmark-buffer-file-name)) (error \"no file associated with this buffer\")))\n")
-	("t" "Tasks" entry (file+headline "gtd.org" "Tasks") "* TODO %^{Brief Description} %^g\n%?\nAdded: %U")
+	("t" "Tasks" entry (file "refile.org") "* TODO %^{Brief Description} %^g\n%?\nAdded: %U")
 	("j" "Journal" entry (file+datetree "diary.org") "* %?\n%U\n  %i" :clock-in t :clock-resume t)
 	("s" "Someday" entry (file "someday.org") "* %?\n%U\n %i")
 	("C" "Changelists" entry (file+headline "gtd.org" "Changelists")

@@ -40,6 +40,9 @@
   (setq org-agenda-custom-commands
 	'((" " "Agenga"
 	   ((agenda "" nil)
+	    (tags "+CATEGORY=\"REFILE\""
+		  ((org-agenda-overriding-header "Refile These Tasks")
+		   (org-agenda-prefix-format "  ")))
 	    (tags-todo "+STARTED"
 		       ((org-agenda-overriding-header "Started and Not Finished Tasks")
 			(org-agenda-skip-function
@@ -161,4 +164,9 @@
 
   ;; org-beamer
   (setq org-beamer-environments-extra
-	'(("overlayarea" "r" "\\begin{overlayarea}{\\textwidth}{\\textheight}" "\\end{overlayarea}"))))
+	'(("overlayarea" "r" "\\begin{overlayarea}{\\textwidth}{\\textheight}" "\\end{overlayarea}")))
+
+  ;; FIXME: how could this work??
+  (defadvice org-attach-tag (around tag-while-read-only first (&rest args))
+    "because org-attach-tag may be called in column view which is read-only. This advice function make this possible"
+    ))
