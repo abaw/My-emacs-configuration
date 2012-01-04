@@ -8,12 +8,14 @@
       (action-transformer . (anything-c-transform-file-load-el anything-c-transform-file-browse-url))
       (candidate-transformer . (anything-c-w32-pathname-transformer anything-c-skip-boring-files anything-c-shorten-home-path))))
 
-  (setq anything-for-files-prefered-list '(anything-c-source-files-in-current-dir+
+  (setq anything-for-files-prefered-list `(anything-c-source-files-in-current-dir+
 					   anything-c-source-buffers+
 					   anything-c-source-open-files
 					   anything-c-source-ffap-guesser
 					   anything-c-source-ffap-line
-					   anything-c-source-recentf))
+					   anything-c-source-recentf
+					   ,(when (boundp 'anything-c-source-git-project-files)
+					      'anything-c-source-git-project-files)))
 
   (when (abaw-try-to-require 'anything-c-moccur)
     (setq moccur-split-word t
