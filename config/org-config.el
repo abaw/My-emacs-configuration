@@ -172,4 +172,12 @@
   ;; FIXME: how could this work??
   (defadvice org-attach-tag (around tag-while-read-only first (&rest args))
     "because org-attach-tag may be called in column view which is read-only. This advice function make this possible"
-    ))
+    )
+
+
+  (defadvice org-agenda-set-tags (around with-agenda-tag-list first (&optional tag onoff) activate)
+    "in agenda buffer, we want to access to available tags while
+setting tags"
+    (let ((org-tag-alist (org-uniquify (append org-tag-alist org-tag-alist-for-agenda))))
+      ad-do-it))
+)
