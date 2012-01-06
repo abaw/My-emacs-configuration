@@ -24,17 +24,7 @@
 
  (defun abaw-p4-describe (cl)
    "p4 describe CL and return an alist translated from p4 tagged results"
-   (loop for line in (with-temp-buffer
-		       (if (= 0 (p4-exec-p4 (current-buffer) (list "-s" "-ztag" "describe" (number-to-string cl)) nil))
-			   (split-string (buffer-string) "\n")
-			 (error (buffer-string))))
-	 ;; got an error
-	 if (string-match "^error:" line)
-	 do (error line)
-
-	 ;; tagged results
-	 if (string-match "info[[:digit:]]: \\(\\w+\\) \\(.+\\)" line)
-	 collect (list (match-string 1 line) (match-string 2 line))))
+   (abaw-p4-exec-tagged-result (list "describe" (number-to-string cl))))
 
  (defun abaw-p4-describe-get-files-string (alist)
    "return a list of strings describing affected files in ALIST, ALIST is returned by abaw-p4-describe"
@@ -85,7 +75,8 @@ the changelists before pulling them in refile.org"
 					  with change
 					  if (and (not change) (equal (car tag) "change"))
 					  do (let ((n (string-to-number (cadr tag))))
-					       (when (>= n min-changelist)
+					       (when (and (>= n min-changelist)
+							  (not (memq n org-changelists)))
 						 (setq change n)))
 					  else if (and change (equal (car tag) "desc"))
 					  collect (cons change (cadr tag)) and do (setq change nil))))
@@ -134,5 +125,6 @@ Added: %%U
 			    (org-capture-put :default-time (org-current-time))
 			    (loop do (awhen (get-cl-number-at-line)
 					    (insert-entry-for-changelist it))
-				  while (= 0 (forward-line))))))))))
+				  while (= 0 (forward-line)))
+			    (kill-buffer (current-buffer)))))))))
 )
