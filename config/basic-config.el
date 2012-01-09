@@ -135,6 +135,9 @@
 (tool-bar-mode -1)
 (menu-bar-mode -99) ;; tool bar be accessed through C-mouse-3
 (set-fringe-style 0)
+(mapc (lambda (par) (add-to-list 'default-frame-alist par))
+      '((left-fringe . 0) (right-fringe . 0)))
+
 
 ;; install the color theme for emacs when we got a window system
 (when (and (abaw-try-to-require 'color-theme) window-system)
