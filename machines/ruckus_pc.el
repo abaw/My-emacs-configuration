@@ -37,6 +37,7 @@
 (load "term-config")
 (load "bash-config")
 (load "ibus-config")
+(load "erc-config")
 
 ;; set the browser
 (setq browse-url-generic-program "opera")

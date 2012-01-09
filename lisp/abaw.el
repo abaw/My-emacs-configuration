@@ -287,3 +287,13 @@ definitions and store them in the kill ring for pasting."
   "when enabled, this window is dedicated for its current buffer."
   :lighter "*S*"
   (set-window-dedicated-p (get-buffer-window) sticky-window-mode))
+
+
+(defun select-info-frame (name)
+  "select an info frame named NAME. create a frame first if it
+  does exist yet. an info frame is a frame with special title
+  that make xmonad know how to manage it."
+  (let ((title (concat "abaw:INFO:" name))
+	(frame (find title (frame-list) :test 'equal :key (lambda (f) (frame-parameter f 'title)))))
+    (select-frame (or frame
+		      (make-frame `((title . ,title)))))))
