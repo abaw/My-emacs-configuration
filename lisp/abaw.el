@@ -293,7 +293,7 @@ definitions and store them in the kill ring for pasting."
   "select an info frame named NAME. create a frame first if it
   does exist yet. an info frame is a frame with special title
   that make xmonad know how to manage it."
-  (let ((title (concat "abaw:INFO:" name))
+  (let* ((title (concat "abaw:INFO:" name))
 	(frame (find title (frame-list) :test 'equal :key (lambda (f) (frame-parameter f 'title)))))
     (select-frame (or frame
 		      (make-frame `((title . ,title)))))))
