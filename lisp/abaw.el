@@ -282,11 +282,30 @@ definitions and store them in the kill ring for pasting."
 		       (kill-buffer)
 		       (switch-to-buffer base-buffer))))))
 
+(defun sticky-window-mode-update ()
+  "do `set-window-dedicated-p' according to current sticky-window-mode."
+
+  ;; set the window for the buffer for the first time
+  (unless (local-variable-p 'sticky-window-mode-window)
+    (make-local-variable 'sticky-window-mode-window)
+    (setq sticky-window-mode-window (get-buffer-window)))
+
+  ;; update the window if the origianl window was gone
+  (unless (and (window-live-p sticky-window-mode-window)
+	       (eq (window-buffer sticky-window-mode-window)
+		   (current-buffer)))
+    (setq sticky-window-mode-window (get-buffer-window)))
+
+  (set-window-dedicated-p sticky-window-mode-window sticky-window-mode))
 
 (define-minor-mode sticky-window-mode
   "when enabled, this window is dedicated for its current buffer."
   :lighter "*S*"
-  (set-window-dedicated-p (get-buffer-window) sticky-window-mode))
+  (flet ()
+    (if sticky-window-mode
+	(add-hook 'window-configuration-change-hook 'sticky-window-mode-update t)
+      (remove-hook 'window-configuration-change-hook 'sticky-window-mode-update t))
+    (sticky-window-mode-update)))
 
 
 (defun select-info-frame (name)

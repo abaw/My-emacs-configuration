@@ -10,8 +10,6 @@
   (let ((buffer (current-buffer)))
     (select-info-frame "skype")
     (switch-to-buffer buffer)
-    (when sticky-window-mode
-      (sticky-window-mode 0))
-    (sticky-window-mode 1)))
+    (sticky-window-mode t)))
 
 (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE" "333" "353"))
