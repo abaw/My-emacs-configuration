@@ -14,4 +14,4 @@
       (sticky-window-mode 0))
     (sticky-window-mode 1)))
 
-
+(setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE" "333" "353"))
