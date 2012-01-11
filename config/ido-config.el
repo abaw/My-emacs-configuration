@@ -7,7 +7,8 @@ values."
       ad-do-it))
 
   (ido-mode t)
-  ;; this is kind of danger (fset 'read-file-name 'ido-read-file-name)
+  ;; this is kind of danger
+  (fset 'read-file-name 'ido-read-file-name)
   (setq ido-enable-flex-matching t)
   (setq ido-default-buffer-method 'selected-window)
   (setq ido-default-file-method 'selected-window)
