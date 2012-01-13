@@ -180,4 +180,23 @@
 setting tags"
     (let ((org-tag-alist (org-uniquify (append org-tag-alist org-tag-alist-for-agenda))))
       ad-do-it))
+
+  (defun abaw-org-insert-screenshot ()
+    "insert a screenshot in org-mode. it will use `scrot' program
+to capture the screenshot and insert a link to the taken image in
+org-mode."
+    (interactive)
+    (unless (eq major-mode 'org-mode)
+      (error "This is only useful in org-mode"))
+
+    (let ((filename (concat (format-time-string "%Y%m%d_%H%M_screenshot" (current-time))
+			    (format "_%s.png" (make-temp-name "")))))
+      (when (file-exists-p filename)
+	(error "a screenshot file already exists, try it again."))
+      (message "Selecting a window or rectangle to take screenshot!!")
+      (if (= 0 (call-process "scrot" nil nil nil "-s" filename))
+	  (progn (insert (format "[[file:%s]]\n" filename))
+		 (org-display-inline-images))
+	(error "scrot failed"))))
+
 )
