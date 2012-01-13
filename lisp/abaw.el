@@ -253,16 +253,17 @@ definitions and store them in the kill ring for pasting."
   (interactive)
   (when (looking-at "[[:blank:]]")
     (forward-whitespace 1))
-  (if (re-search-forward ".[A-Z]" (cdr (bounds-of-thing-at-point 'word)) t)
+  (if (let (case-fold-search)
+	(re-search-forward ".[A-Z]" (cdr (bounds-of-thing-at-point 'word)) t))
       (backward-char)
     (forward-word)))
 
 (defun backward-part-in-word ()
   "backward one part in word like \"ThisIsAWord\""
   (interactive)
-  (unless (re-search-backward "[A-Z]" (car (bounds-of-thing-at-point 'word))
-			   t)
-      (backward-word)))
+  (unless (let (case-fold-search)
+	    (re-search-backward "[A-Z]" (car (bounds-of-thing-at-point 'word)) t))
+    (backward-word)))
 
 (defun edit-region (start end mode)
   "edit selected text in different major mode"
