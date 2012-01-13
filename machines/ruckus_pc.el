@@ -48,7 +48,6 @@
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (setq org-agenda-files (list "~/orgs/gtd.org" "~/orgs/diary.org" "~/orgs/meetings.org" "~/orgs/someday.org" "~/orgs/refile.org"))
 (setq org-refile-targets '((nil . (:level . 1)) ;; re-file to be under a level 1 headline of current buffer
-			   ("~/orgs/diary.org" . (:level . 3)) ;; re-file to diary day headlines
 			   ("~/orgs/gtd.org" . (:tag . "PROJECT")) ;; re-file to a project
 			   ("~/orgs/gtd.org" . (:level . 1)) ;; re-file to be under a level 1 headline
 			   ))
