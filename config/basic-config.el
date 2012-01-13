@@ -171,6 +171,10 @@
 (when (abaw-try-to-require 'iedit)
   (global-set-key (kbd "C-c ;") 'iedit-mode))
 
+(require 'mark-more-like-this)
+(global-set-key (kbd "C-c >") 'mark-next-like-this)
+(global-set-key (kbd "C-c <") 'mark-previous-like-this)
+
 ;; alias perl-mode to cperl-mode. cperl-mode seems to be slow if loaded on top of perl-mode
 (defalias 'perl-mode 'cperl-mode)
 
