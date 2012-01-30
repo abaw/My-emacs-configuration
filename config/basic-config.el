@@ -178,6 +178,10 @@
 (global-set-key (kbd "C-c >") 'mark-next-like-this)
 (global-set-key (kbd "C-c <") 'mark-previous-like-this)
 
+(add-to-list 'load-path (concat my-emacs-lisp-dir "/expand-region"))
+(require 'expand-region)
+(global-set-key (kbd "C-@") 'er/expand-region)
+
 ;; alias perl-mode to cperl-mode. cperl-mode seems to be slow if loaded on top of perl-mode
 (defalias 'perl-mode 'cperl-mode)
 

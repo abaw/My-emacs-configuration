@@ -10,3 +10,6 @@
 [submodule "lisp/mark-multiple"]
 	path = lisp/mark-multiple
 	url = git@github.com:abaw/mark-multiple.el.git
+[submodule "lisp/expand-region"]
+	path = lisp/expand-region
+	url = git://github.com/magnars/expand-region.el.git
