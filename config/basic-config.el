@@ -7,6 +7,9 @@
 ;; fill-column
 (set-default 'fill-column 80)
 
+;; to use commands using minibuffer within minibuffer
+(setq enable-recursive-minibuffers t)
+
 ;; load my utilities
 (load "abaw")
 
