@@ -16,8 +16,11 @@
 (add-to-list 'Info-default-directory-list (file-name-as-directory (concat my-emacs-dir "info")))
 
 (load "basic-config")
+(require 'package)
+(package-initialize)
 (load "cc-config")
 (load "lisp-config")
+(load "python-config")
 (load "yasnippet-config")
 (load "doremi-config")
 (load "git-config")
