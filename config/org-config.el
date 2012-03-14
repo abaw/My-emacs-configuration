@@ -9,6 +9,8 @@
 	    #'(lambda ()
 		(flyspell-mode t)))
 
+  (add-hook 'org-agenda-mode-hook (lambda () (highlight-current-line-minor-mode t)))
+
   ;; todo keys settings
   (setq org-todo-keywords
 	'((sequence "MAYBE(m)" "TODO(t)" "STARTED(s)" "WAITING(w)" "POSTPONED(p)" "|" "DONE(d)" "CANCELLED(c)" "DELEGATED(D)" )))
@@ -198,5 +200,12 @@ org-mode."
 	  (progn (insert (format "[[file:%s]]\n" filename))
 		 (org-display-inline-images))
 	(error "scrot failed"))))
+
+  (defun abaw-org-capture-add-timestamp ()
+    "Add timestamp for current \"todo\" item. this is intended to
+    hook to org-capture-mode-hook."
+    (when (org-entry-is-todo-p)
+      (org-set-property "ADDED" (with-temp-buffer (org-insert-time-stamp (current-time) t t)
+						  (buffer-string)))))
 
 )
